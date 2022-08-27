@@ -1,6 +1,41 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "jsx": "react-native",
+    "lib": ["es6", "ES2021.String"],
+    "moduleResolution": "node",
+    "noEmit": true,
+    "strict": true,
+    "target": "es2021",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "api/*": ["src/api/*"],
+      "assets/*": ["src/assets/*"],
+      "components/*": ["src/components/*"],
+      "config/*": ["src/config/*"],
+      "contexts/*": ["src/contexts/*"],
+      "hooks/*": ["src/hooks/*"],
+      "locale/*": ["src/locales/*"],
+      "modules/*": ["src/modules/*"],
+      "screens/*": ["src/screens/*"],
+      "services/*": ["src/services/*"],
+      "utils/*": ["src/utils/*"]
+    }
+  },
+  "typeRoots": ["./node_modules/@types"],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "vscode/**/*",
+    "lib/**/*",
+    "tests"
+  ],
+  "extends": "expo/tsconfig.base"
 }
