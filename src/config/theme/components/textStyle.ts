@@ -1,7 +1,7 @@
 export const textStyle = {
   baseStyle: {
     _light: {
-      color: 'primary.500',
+      color: 'secondary.100',
     },
   },
   variants: {

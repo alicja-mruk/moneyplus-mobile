@@ -24,7 +24,8 @@
       "modules/*": ["src/modules/*"],
       "screens/*": ["src/screens/*"],
       "services/*": ["src/services/*"],
-      "utils/*": ["src/utils/*"]
+      "utils/*": ["src/utils/*"],
+      "models/*": ["src/models/*"]
     }
   },
   "typeRoots": ["./node_modules/@types"],

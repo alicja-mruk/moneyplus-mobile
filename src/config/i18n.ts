@@ -1,7 +1,8 @@
-import translationEN from '../locale/en.json';
 import i18n from 'i18next';
 import 'intl-pluralrules';
 import { initReactI18next } from 'react-i18next';
+
+import translationEN from 'assets/locale/en.json';
 
 const resources = {
   en: {
