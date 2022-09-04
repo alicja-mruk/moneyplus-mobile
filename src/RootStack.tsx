@@ -1,7 +1,9 @@
+import React from 'react';
 import { Platform } from 'react-native';
 
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+import { useAuthContext } from 'contexts';
 import { SignedInStack, SignedOutStack } from 'modules';
 import { RootStackParamList } from 'types';
 
@@ -13,9 +15,7 @@ const cardStyleInterpolator = Platform.select({
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack = () => {
-  // const { value } = useAuthContext();
-  // TODO: remove
-  const isSignedIn = true;
+  const { user } = useAuthContext();
 
   return (
     <Stack.Navigator
@@ -25,7 +25,7 @@ export const RootStack = () => {
         gestureEnabled: false,
         cardStyleInterpolator,
       }}>
-      {isSignedIn ? (
+      {user ? (
         <Stack.Screen name="SignedInStack" component={SignedInStack} />
       ) : (
         <Stack.Screen name="SignedOutStack" component={SignedOutStack} />

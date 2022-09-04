@@ -1,36 +1,39 @@
 export const fontConfig = {
-  OpenSans: {
+  Inter: {
+    100: {
+      normal: 'Inter-Thin',
+    },
+    200: {
+      normal: 'Inter-ExtraLight',
+    },
     300: {
-      normal: 'OpenSans-Light',
-      italic: 'OpenSans-LightItalic',
+      normal: 'Inter-Light',
     },
     400: {
-      normal: 'OpenSans-Regular',
-      italic: 'OpenSans-Italic',
+      normal: 'Inter-Regular',
     },
     500: {
-      normal: 'OpenSans-Medium',
-      italic: 'OpenSans-MediumItalic',
+      normal: 'Inter-Medium',
     },
     600: {
-      normal: 'OpenSans-SemiBold',
-      italic: 'OpenSans-SemiBoldItalic',
+      normal: 'Inter-SemiBold',
     },
     700: {
-      normal: 'OpenSans-Bold',
-      italic: 'OpenSans-BoldItalic',
+      normal: 'Inter-Bold',
     },
     800: {
-      normal: 'OpenSans-ExtraBold',
-      italic: 'OpenSans-ExtraBoldItalic',
+      normal: 'Inter-ExtraBold',
+    },
+    900: {
+      normal: 'Inter-Black',
     },
   },
 };
 
 export const fonts = {
-  heading: 'OpenSans',
-  body: 'OpenSans',
-  mono: 'OpenSans',
+  heading: 'Inter',
+  body: 'Inter',
+  mono: 'Inter',
 };
 
 export const fontSizes = {
