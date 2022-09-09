@@ -3,7 +3,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Text, View } from 'native-base';
 
-import { SignedInStackParamList } from './types';
+
 
 const Stack = createStackNavigator<SignedInStackParamList>();
 
@@ -15,3 +15,5 @@ export const SignedInStack = () => {
     </View>
   );
 };
+
+type SignedInStackParamList = {};

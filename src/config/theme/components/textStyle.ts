@@ -1,7 +1,7 @@
 export const textStyle = {
   baseStyle: {
     _light: {
-      color: 'secondary.100',
+      color: 'primary.100',
     },
   },
   variants: {
@@ -60,16 +60,20 @@ export const textStyle = {
       fontWeight: '400',
       lineHeight: '24',
     },
-    button: {
+    subtitle: {
       fontSize: 'md',
-      color: 'white',
-      fontWeight: '700',
+      fontWeight: '500',
       lineHeight: '20',
     },
     label: {
       fontSize: 'sm',
       fontWeight: '600',
       lineHeight: '20',
+    },
+    authTitle: {
+      fontSize: '36',
+      fontWeight: '700',
+      lineHeight: '36',
     },
   },
 };

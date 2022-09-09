@@ -1,6 +1,6 @@
 import { extendTheme, ITheme } from 'native-base';
 
-import { buttonStyle, textStyle } from './components';
+import { buttonStyle, inputStyle, textStyle } from './components';
 import { colorPalette, fontConfig, fonts, fontSizes } from './foundations';
 
 export const theme: ITheme = extendTheme({
@@ -11,5 +11,6 @@ export const theme: ITheme = extendTheme({
   components: {
     Button: buttonStyle,
     Text: textStyle,
+    Input: inputStyle,
   },
 });

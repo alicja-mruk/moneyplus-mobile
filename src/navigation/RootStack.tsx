@@ -1,11 +1,16 @@
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { NavigatorScreenParams } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import { useAuthContext } from 'contexts';
-import { SignedInStack, SignedOutStack } from 'modules';
-import { RootStackParamList } from 'types';
+import {
+  SignedInStack,
+  SignedInStackParamList,
+  SignedOutStack,
+  SignedOutStackParamList,
+} from 'modules';
 
 const cardStyleInterpolator = Platform.select({
   ios: CardStyleInterpolators.forFadeFromCenter,
@@ -32,4 +37,9 @@ export const RootStack = () => {
       )}
     </Stack.Navigator>
   );
+};
+
+type RootStackParamList = {
+  SignedOutStack: NavigatorScreenParams<SignedOutStackParamList>;
+  SignedInStack: NavigatorScreenParams<SignedInStackParamList>;
 };

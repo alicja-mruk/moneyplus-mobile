@@ -3,8 +3,8 @@ import { Dict } from 'native-base/lib/typescript/theme/tools';
 export const buttonStyle = {
   baseStyle: {
     w: '100%',
-    minH: '44px',
-    rounded: '8',
+    minH: '48px',
+    rounded: '12',
     _text: {
       fontWeight: '700',
       color: 'white',
@@ -14,16 +14,16 @@ export const buttonStyle = {
     md: {
       _text: {
         px: '1',
-        fontSize: 'sm',
+        fontSize: 'md',
         alignSelf: 'center',
       },
     },
   },
   variants: {
-    solid: ({ colorScheme }: Dict) => {
+    solid: () => {
       return {
         _light: {
-          bg: 'primary.500',
+          bg: 'primary.200',
           _text: {
             color: 'white',
           },
@@ -33,34 +33,30 @@ export const buttonStyle = {
           _spinner: {
             color: 'white',
           },
-          _hover: {
-            bg: `${colorScheme}.300`,
-          },
           _pressed: {
-            bg: `${colorScheme}.300`,
+            bg: 'primary.200:alpha.50',
           },
           _disabled: {
-            bg: `${colorScheme}.200`,
+            bg: 'gray.400',
           },
         },
       };
     },
-    outline: ({ colorScheme }: Dict) => {
+    outline: () => {
       return {
         _light: {
           bg: 'transparent',
           borderWidth: '2',
-          borderColor: `${colorScheme}.300`,
+          borderColor: 'secondary.300',
           _text: {
             fontWeight: '700',
-            color: `${colorScheme}.400`,
+            color: 'primary.200',
           },
           _icon: {
             color: 'white',
           },
           _pressed: {
-            bg: `${colorScheme}.100`,
-            borderColor: `${colorScheme}.400`,
+            bg: 'primary.200:alpha.10',
           },
           _disabled: {
             bg: 'gray.200',
@@ -74,11 +70,11 @@ export const buttonStyle = {
           bg: 'transparent',
           _text: {
             fontWeight: '600',
-            color: `${colorScheme}.400`,
+            color: 'secondary.100',
           },
           _pressed: {
-            bg: 'gray.100',
-            borderColor: `${colorScheme}.400`,
+            bg: 'secondary.100:alpha.10',
+            borderColor: 'secondary.100',
           },
           _disabled: {
             bg: 'gray.200',

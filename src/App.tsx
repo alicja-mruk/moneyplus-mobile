@@ -7,8 +7,7 @@ import { NativeBaseProvider, View } from 'native-base';
 
 import { theme } from 'config/theme';
 import { useLoadFonts } from 'hooks';
-
-import { RootStack } from './RootStack';
+import { RootStack } from 'navigation/RootStack';
 
 export const App = () => {
   const ready = useLoadFonts();
