@@ -11,15 +11,10 @@ type Props = {
 export const AuthProvider = ({ children }: Props) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const onSetUser = (user: User) => setUser(user);
 
   const login = async (email: string, password: string) => {};
 
   const register = async (firstName: string, lastName: string) => {};
 
-  return (
-    <AuthContext.Provider value={{ user, setUser: onSetUser, login, register }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, login, register }}>{children}</AuthContext.Provider>;
 };
