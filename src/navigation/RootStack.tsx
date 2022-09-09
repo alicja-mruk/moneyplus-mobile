@@ -4,13 +4,15 @@ import { Platform } from 'react-native';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { useAuthContext } from 'contexts';
 import {
   SignedInStack,
   SignedInStackParamList,
   SignedOutStack,
   SignedOutStackParamList,
+  Splash,
 } from 'modules';
+
+import { Route } from './Route';
 
 const cardStyleInterpolator = Platform.select({
   ios: CardStyleInterpolators.forFadeFromCenter,
@@ -20,21 +22,17 @@ const cardStyleInterpolator = Platform.select({
 const Stack = createStackNavigator<RootStackParamList>();
 
 export const RootStack = () => {
-  const { user } = useAuthContext();
-
   return (
     <Stack.Navigator
-      initialRouteName="SignedOutStack"
+      initialRouteName={Route.SignedOutStack}
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
         cardStyleInterpolator,
       }}>
-      {user ? (
-        <Stack.Screen name="SignedInStack" component={SignedInStack} />
-      ) : (
-        <Stack.Screen name="SignedOutStack" component={SignedOutStack} />
-      )}
+      <Stack.Screen name={Route.Splash} component={Splash} />
+      <Stack.Screen name={Route.SignedInStack} component={SignedInStack} />
+      <Stack.Screen name={Route.SignedOutStack} component={SignedOutStack} />
     </Stack.Navigator>
   );
 };
@@ -42,4 +40,5 @@ export const RootStack = () => {
 type RootStackParamList = {
   SignedOutStack: NavigatorScreenParams<SignedOutStackParamList>;
   SignedInStack: NavigatorScreenParams<SignedInStackParamList>;
+  Splash: undefined;
 };

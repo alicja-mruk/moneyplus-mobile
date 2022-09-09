@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, View } from 'native-base';
 
 import { theme } from 'config/theme';
+import { AuthProvider, AxiosProvider } from 'contexts';
 import { useLoadFonts } from 'hooks';
 import { RootStack } from 'navigation/RootStack';
 
@@ -26,7 +27,11 @@ export const App = () => {
     <NativeBaseProvider theme={theme}>
       <NavigationContainer>
         <View flex="1" onLayout={onLayoutRootView}>
-          <RootStack />
+          <AuthProvider>
+            <AxiosProvider>
+              <RootStack />
+            </AxiosProvider>
+          </AuthProvider>
         </View>
       </NavigationContainer>
     </NativeBaseProvider>
