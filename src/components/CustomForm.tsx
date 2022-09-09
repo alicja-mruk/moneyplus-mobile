@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Box, FormControl, Input, ScrollView, VStack } from 'native-base';
+import { Box, FormControl, ScrollView, VStack } from 'native-base';
 import { Control, Controller, useForm, UseFormGetValues, UseFormReset } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+
+import { BaseInput } from './BaseInput';
 
 export type TextInputTypes = 'text' | 'number';
 
@@ -13,6 +15,8 @@ type BaseValueInput = {
   disabled?: boolean;
   pattern?: { value: RegExp; message: string };
   validate?: boolean;
+  // eslint-disable-next-line no-undef
+  InputLeftElement?: JSX.Element;
 };
 
 type SingleValueInput = {
@@ -65,9 +69,9 @@ export const CustomForm = ({
               <Controller
                 name={item.key}
                 rules={{
-                  required: item.required ? t('form.required') : false,
-                  pattern: item.pattern ?? undefined,
-                  validate: item.validate ?? undefined,
+                  required: item?.required ? t('form.required') : false,
+                  pattern: item?.pattern ?? undefined,
+                  validate: item?.validate ?? undefined,
                 }}
                 control={control}
                 render={({ field }) => (
@@ -76,7 +80,8 @@ export const CustomForm = ({
                     {
                       {
                         text: (
-                          <Input
+                          <BaseInput
+                            InputLeftElement={item?.InputLeftElement}
                             value={field.value}
                             onBlur={field.onBlur}
                             onChangeText={field.onChange}
@@ -84,7 +89,8 @@ export const CustomForm = ({
                           />
                         ),
                         number: (
-                          <Input
+                          <BaseInput
+                            InputLeftElement={item?.InputLeftElement}
                             keyboardType="numeric"
                             value={field.value}
                             onBlur={field.onBlur}
