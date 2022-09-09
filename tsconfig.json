@@ -25,7 +25,8 @@
       "screens/*": ["src/screens/*"],
       "services/*": ["src/services/*"],
       "utils/*": ["src/utils/*"],
-      "models/*": ["src/models/*"]
+      "models/*": ["src/models/*"],
+      "navigation/*": ["src/navigation/*"]
     }
   },
   "typeRoots": ["./node_modules/@types"],

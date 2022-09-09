@@ -1,3 +1,22 @@
 {
-    "global": {}
+  "global": {},
+  "signedOut": {
+    "email": "Email",
+    "password": "Password",
+    "login": {
+      "title": "Login",
+      "login": "Login",
+      "newUser": "New to MoneyPlus?",
+      "register": "Register"
+    },
+    "register": {
+      "title": "Sign up",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "age": "Age",
+      "register": "Register"
+    }
+  },
+
+  "signedIn": {}
 }
