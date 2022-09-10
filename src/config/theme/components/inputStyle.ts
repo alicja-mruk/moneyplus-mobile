@@ -7,9 +7,4 @@ export const inputStyle = {
       color: 'white',
     },
   },
-  variants: {
-    underlined: {
-      pl: '3',
-    },
-  },
 };
