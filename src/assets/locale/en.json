@@ -1,8 +1,17 @@
 {
+  "form": {
+    "required": "Field is required",
+    "emailIncorrectFormat": "Email has incorrect format",
+    "minLength": "{{ name }} should contain at least {{ length }} characters"
+  },
   "global": {},
   "signedOut": {
     "email": "Email",
     "password": "Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "age": "Age",
+
     "login": {
       "title": "Login",
       "login": "Login",

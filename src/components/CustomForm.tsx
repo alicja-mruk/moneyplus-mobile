@@ -1,7 +1,14 @@
 import React from 'react';
 
 import { Box, FormControl, ScrollView, VStack } from 'native-base';
-import { Control, Controller, useForm, UseFormGetValues, UseFormReset } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  useForm,
+  UseFormGetValues,
+  UseFormReset,
+  Validate,
+} from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { BaseInput } from './BaseInput';
@@ -14,7 +21,8 @@ type BaseValueInput = {
   required?: boolean;
   disabled?: boolean;
   pattern?: { value: RegExp; message: string };
-  validate?: boolean;
+  validate?: Validate<any>;
+  minLength?: { value: number; message: string };
   // eslint-disable-next-line no-undef
   InputLeftElement?: JSX.Element;
 };
@@ -41,6 +49,7 @@ type Props = {
   children?: React.ReactNode;
   showLabels?: boolean;
   verticalSpaceFooter?: string;
+  scrollEnabled?: boolean;
 };
 
 export const CustomForm = ({
@@ -50,6 +59,7 @@ export const CustomForm = ({
   children,
   showLabels = true,
   verticalSpaceFooter = '12',
+  scrollEnabled = true,
 }: Props) => {
   const { t } = useTranslation();
 
@@ -62,9 +72,9 @@ export const CustomForm = ({
 
   return (
     <>
-      <ScrollView>
-        <VStack space="6">
-          {formConfig.map(item => (
+      <ScrollView scrollEnabled={scrollEnabled}>
+        {formConfig.map(item => (
+          <Box h="16">
             <FormControl key={item.key} isInvalid={item.key in errors}>
               <Controller
                 name={item.key}
@@ -72,6 +82,7 @@ export const CustomForm = ({
                   required: item?.required ? t('form.required') : false,
                   pattern: item?.pattern ?? undefined,
                   validate: item?.validate ?? undefined,
+                  minLength: item?.minLength ?? undefined,
                 }}
                 control={control}
                 render={({ field }) => (
@@ -86,6 +97,7 @@ export const CustomForm = ({
                             onBlur={field.onBlur}
                             onChangeText={field.onChange}
                             isDisabled={item.disabled}
+                            placeholder={item.name}
                           />
                         ),
                         number: (
@@ -95,6 +107,7 @@ export const CustomForm = ({
                             value={field.value}
                             onBlur={field.onBlur}
                             onChangeText={field.onChange}
+                            placeholder={item.name}
                           />
                         ),
                       }[item.type]
@@ -102,10 +115,13 @@ export const CustomForm = ({
                   </>
                 )}
               />
-              <FormControl.ErrorMessage>{errors[item.key]?.message}</FormControl.ErrorMessage>
+              <FormControl.ErrorMessage position="absolute" bottom="-20">
+                {errors[item.key]?.message}
+              </FormControl.ErrorMessage>
             </FormControl>
-          ))}
-        </VStack>
+          </Box>
+        ))}
+
         {children}
       </ScrollView>
 
