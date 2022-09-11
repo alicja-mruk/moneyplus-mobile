@@ -25,7 +25,6 @@ module.exports = function (api) {
             contexts: './src/contexts',
             hooks: './src/hooks',
             modules: './src/modules',
-            screens: './src/screens',
             services: './src/services',
             utils: './src/utils',
             models: './src/models',

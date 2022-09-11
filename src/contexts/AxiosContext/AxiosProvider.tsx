@@ -4,6 +4,7 @@ import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import * as Keychain from 'react-native-keychain';
 
+import { Constants } from 'config/constants';
 import { useAuthContext } from 'contexts';
 
 import { AxiosContext } from './AxiosContext';
@@ -17,11 +18,11 @@ export const AxiosProvider = ({ children }: Props) => {
 
   // TODO: change api
   const authAxios = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: Constants.BASE_URL,
   });
 
   const publicAxios = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: Constants.BASE_URL,
   });
 
   authAxios.interceptors.request.use(
@@ -45,7 +46,7 @@ export const AxiosProvider = ({ children }: Props) => {
     const options = {
       method: 'POST',
       data,
-      url: 'http://localhost:3001/api/refreshToken',
+      url: `${Constants.BASE_URL}/refreshToken`,
     };
 
     try {
