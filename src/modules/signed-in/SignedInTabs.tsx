@@ -47,8 +47,9 @@ export const SignedInTabs = () => {
           }
         },
       })}>
-      {tabs.map(tab => (
+      {tabs.map((tab, index) => (
         <Tab.Screen
+          key={index}
           name={tab.name as keyof SignedInTabsParamList}
           component={tab.component}
           options={{

@@ -48,7 +48,7 @@ export const Splash = () => {
 
       return;
     }
-    if (status === 'error') navigation.navigate(Route.SignedOutStack);
+    if (status === 'error') navigation.navigate(Route.Login);
   }, [navigation, status]);
 
   return (
