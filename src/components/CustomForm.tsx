@@ -20,6 +20,7 @@ type BaseValueInput = {
   name: string;
   required?: boolean;
   disabled?: boolean;
+  secureTextEntry?: boolean;
   pattern?: { value: RegExp; message: string };
   validate?: Validate<any>;
   minLength?: { value: number; message: string };
@@ -98,6 +99,7 @@ export const CustomForm = ({
                             onChangeText={field.onChange}
                             isDisabled={item.disabled}
                             placeholder={item.name}
+                            secureTextEntry={item?.secureTextEntry}
                           />
                         ),
                         number: (
