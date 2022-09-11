@@ -7,6 +7,7 @@ export const colorPalette = {
     100: '#E5989B',
     200: '#FFB4A2',
     300: '#FFCDB2',
+    400: '#FFA3Af',
   },
   tertiary: {
     100: '#2DC7FF',
