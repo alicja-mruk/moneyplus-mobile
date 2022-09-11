@@ -63,7 +63,7 @@ export const Login = () => {
           <Text variant="subtitle">{t('signedOut.login.newUser')} </Text>
           <Text
             variant="subtitle"
-            color="tertiary.200"
+            color="tertiary.100"
             fontWeight="600"
             onPress={() => navigate(Route.Register)}>
             {t('signedOut.login.register')}
