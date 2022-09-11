@@ -13,4 +13,7 @@ export enum Route {
 
   OverviewStack = 'OverviewStack',
   Overview = 'Overview',
+
+  SettingsStack = 'SettingsStack',
+  Settings = 'Settings',
 }

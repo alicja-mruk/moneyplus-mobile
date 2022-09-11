@@ -31,7 +31,8 @@
     "tabs": {
       "categories": "Categories",
       "transactions": "Transactions",
-      "overview": "Overview"
+      "overview": "Overview",
+      "settings": "Settings"
     }
   }
 }
