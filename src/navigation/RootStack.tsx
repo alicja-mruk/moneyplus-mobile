@@ -5,8 +5,8 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
 import {
-  SignedInStack,
-  SignedInStackParamList,
+  SignedInTabs,
+  SignedInTabsParamList,
   SignedOutStack,
   SignedOutStackParamList,
   Splash,
@@ -31,7 +31,7 @@ export const RootStack = () => {
         cardStyleInterpolator,
       }}>
       <Stack.Screen name={Route.Splash} component={Splash} />
-      <Stack.Screen name={Route.SignedInStack} component={SignedInStack} />
+      <Stack.Screen name={Route.SignedInTabs} component={SignedInTabs} />
       <Stack.Screen name={Route.SignedOutStack} component={SignedOutStack} />
     </Stack.Navigator>
   );
@@ -39,6 +39,6 @@ export const RootStack = () => {
 
 type RootStackParamList = {
   SignedOutStack: NavigatorScreenParams<SignedOutStackParamList>;
-  SignedInStack: NavigatorScreenParams<SignedInStackParamList>;
+  SignedInTabs: NavigatorScreenParams<SignedInTabsParamList>;
   Splash: undefined;
 };

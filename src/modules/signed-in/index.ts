@@ -1,2 +1,2 @@
-export { SignedInStack } from './SignedInStack';
-export type { SignedInStackParamList } from './types';
+export { SignedInTabs } from './SignedInTabs';
+export type { SignedInTabsParamList } from './SignedInTabs';

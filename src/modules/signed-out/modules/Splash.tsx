@@ -37,13 +37,13 @@ export const Splash = () => {
 
   useEffect(() => {
     loadJWT();
-  }, [loadJWT]);
+  }, []);
 
   useEffect(() => {
     if (status === 'success') {
       navigation.reset({
         index: 0,
-        routes: [{ name: Route.SignedInStack }],
+        routes: [{ name: Route.SignedInTabs }],
       });
 
       return;
