@@ -1,16 +1,14 @@
 import React from 'react';
 
-import { Entypo, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import i18next from 'i18next';
-import { useTranslation } from 'react-i18next';
 
 import { colorPalette } from 'config/theme/foundations';
 import { Route } from 'navigation';
 
-import { CategoriesStack, OverviewStack, TransactionsStack } from './modules';
-import { TabBarLabel } from './TabBarLabel';
+import { CategoriesStack, OverviewStack, SettingsStack, TransactionsStack } from './modules';
 
 const hiddenTabRoutes: Route[] = [];
 
@@ -25,7 +23,7 @@ export const SignedInTabs = () => {
           backgroundColor: 'white',
         },
         tabBarStyle: {
-          height: 96,
+          height: 64,
           paddingTop: 16,
           paddingBottom: 24,
           display: hiddenTabRoutes.includes(getFocusedRouteNameFromRoute(route) as Route)
@@ -42,6 +40,8 @@ export const SignedInTabs = () => {
               return <MaterialIcons name="account-balance-wallet" size={24} color={color} />;
             case Route.OverviewStack:
               return <Entypo name="bar-graph" size={24} color={color} />;
+            case Route.SettingsStack:
+              return <MaterialCommunityIcons name="account" size={32} color={color} />;
             default:
               return;
           }
@@ -52,7 +52,7 @@ export const SignedInTabs = () => {
           name={tab.name as keyof SignedInTabsParamList}
           component={tab.component}
           options={{
-            tabBarLabel: ({ focused }) => <TabBarLabel label={tab.label} focused={focused} />,
+            tabBarLabel: ({ focused }) => null,
           }}
         />
       ))}
@@ -76,10 +76,16 @@ const tabs = [
     component: OverviewStack,
     label: i18next.t('signedIn.tabs.overview'),
   },
+  {
+    name: Route.SettingsStack,
+    component: SettingsStack,
+    label: i18next.t('signedIn.tabs.settings'),
+  },
 ];
 
 export type SignedInTabsParamList = {
   CategoriesStack: undefined;
   TransactionsStack: undefined;
   OverviewStack: undefined;
+  SettingsStack: undefined;
 };
