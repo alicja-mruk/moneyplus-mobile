@@ -13,10 +13,10 @@ index 0f7adff..4703e42 100644
      containerStyle?: StyleProp<ViewStyle>;
      animationType?: DonutAnimationType;
 diff --git a/node_modules/react-native-circular-chart/dist/typescript/index.d.ts b/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
-index 0f7adff..4703e42 100644
+index 0f7adff..1cb576e 100644
 --- a/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
 +++ b/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
-@@ -15,8 +15,7 @@ export declare type IDonutProps = {
+@@ -15,11 +15,10 @@ export declare type IDonutProps = {
      endAngle?: number;
      strokeWidth?: number;
      type?: "butt" | "round";
@@ -26,6 +26,11 @@ index 0f7adff..4703e42 100644
      labelWrapperStyle?: StyleProp<ViewStyle>;
      containerStyle?: StyleProp<ViewStyle>;
      animationType?: DonutAnimationType;
+ };
+-export declare const DonutChart: ({ data, containerWidth, containerHeight, radius, startAngle, endAngle, strokeWidth, type, animationType, labelWrapperStyle, labelValueStyle, labelTitleStyle, containerStyle, }: IDonutProps) => JSX.Element;
++export declare const DonutChart: ({ data, containerWidth, containerHeight, radius, startAngle, endAngle, strokeWidth, type, info, animationType, labelWrapperStyle, containerStyle }: IDonutProps) => JSX.Element;
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
 diff --git a/node_modules/react-native-circular-chart/src/index.tsx b/node_modules/react-native-circular-chart/src/index.tsx
 index d930ad0..9a15a50 100644
 --- a/node_modules/react-native-circular-chart/src/index.tsx
