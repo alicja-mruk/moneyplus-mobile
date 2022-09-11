@@ -35,6 +35,8 @@ export const Login = () => {
 
   const onLoginPress = (values: { email: string; password: string }) => {
     // TODO: login
+    // if success
+    navigate(Route.SignedInTabs);
   };
 
   return (

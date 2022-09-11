@@ -4,5 +4,13 @@ export enum Route {
   Register = 'Register',
   Splash = 'Splash',
 
-  SignedInStack = 'SignedInStack',
+  SignedInTabs = 'SignedInTabs',
+  CategoriesStack = 'CategoriesStack',
+  Categories = 'Categories',
+
+  TransactionsStack = 'TransactionsStack',
+  Transactions = 'Transactions',
+
+  OverviewStack = 'OverviewStack',
+  Overview = 'Overview',
 }

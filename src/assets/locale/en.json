@@ -27,5 +27,11 @@
     }
   },
 
-  "signedIn": {}
+  "signedIn": {
+    "tabs": {
+      "categories": "Categories",
+      "transactions": "Transactions",
+      "overview": "Overview"
+    }
+  }
 }
