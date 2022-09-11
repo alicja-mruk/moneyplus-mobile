@@ -1,0 +1,162 @@
+diff --git a/node_modules/react-native-circular-chart/dist/index.d.ts b/node_modules/react-native-circular-chart/dist/index.d.ts
+index 0f7adff..4703e42 100644
+--- a/node_modules/react-native-circular-chart/dist/index.d.ts
++++ b/node_modules/react-native-circular-chart/dist/index.d.ts
+@@ -15,8 +15,7 @@ export declare type IDonutProps = {
+     endAngle?: number;
+     strokeWidth?: number;
+     type?: "butt" | "round";
+-    labelValueStyle?: StyleProp<TextStyle>;
+-    labelTitleStyle?: StyleProp<TextStyle>;
++    info?:React.ReactNode;
+     labelWrapperStyle?: StyleProp<ViewStyle>;
+     containerStyle?: StyleProp<ViewStyle>;
+     animationType?: DonutAnimationType;
+diff --git a/node_modules/react-native-circular-chart/dist/typescript/index.d.ts b/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
+index 0f7adff..4703e42 100644
+--- a/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
++++ b/node_modules/react-native-circular-chart/dist/typescript/index.d.ts
+@@ -15,8 +15,7 @@ export declare type IDonutProps = {
+     endAngle?: number;
+     strokeWidth?: number;
+     type?: "butt" | "round";
+-    labelValueStyle?: StyleProp<TextStyle>;
+-    labelTitleStyle?: StyleProp<TextStyle>;
++    info?:React.ReactNode;
+     labelWrapperStyle?: StyleProp<ViewStyle>;
+     containerStyle?: StyleProp<ViewStyle>;
+     animationType?: DonutAnimationType;
+diff --git a/node_modules/react-native-circular-chart/src/index.tsx b/node_modules/react-native-circular-chart/src/index.tsx
+index d930ad0..9a15a50 100644
+--- a/node_modules/react-native-circular-chart/src/index.tsx
++++ b/node_modules/react-native-circular-chart/src/index.tsx
+@@ -1,12 +1,10 @@
+ import React, { useEffect, useRef, useMemo, useState, Fragment } from "react";
+ import {
+   StyleProp,
+-  Text,
+   View,
+   ViewStyle,
+   Animated,
+   StyleSheet,
+-  TextStyle,
+   Easing,
+ } from "react-native";
+ 
+@@ -33,8 +31,7 @@ export type IDonutProps = {
+   endAngle?: number;
+   strokeWidth?: number;
+   type?: "butt" | "round";
+-  labelValueStyle?: StyleProp<TextStyle>;
+-  labelTitleStyle?: StyleProp<TextStyle>;
++  info?:React.ReactNode;
+   labelWrapperStyle?: StyleProp<ViewStyle>;
+   containerStyle?: StyleProp<ViewStyle>;
+ 
+@@ -52,11 +49,10 @@ export const DonutChart = ({
+   endAngle = startAngle * -1,
+   strokeWidth = 10,
+   type = "round",
++  info,
+   animationType = "slide",
+ 
+   labelWrapperStyle,
+-  labelValueStyle,
+-  labelTitleStyle,
+   containerStyle,
+ }: IDonutProps) => {
+   let donutItemListeners: any = [];
+@@ -223,55 +219,12 @@ export const DonutChart = ({
+     }).start();
+   }, []);
+ 
+-  const onUpdateDisplayValue = (value: DonutItem, index: number) => {
+-    setDisplayValue(value);
+-    animateOpacity.setValue(0);
+-
+-    Animated.parallel([
+-      Animated.timing(animateOpacity, {
+-        toValue: 1,
+-        duration: 500,
+-        useNativeDriver: true,
+-      }),
+-    ]).start();
+-  };
+-
+-  const onPressIn = (value: DonutItem, index: number) => {
+-    Animated.timing(animatedStrokeWidths[index], {
+-      toValue: strokeWidth + 2,
+-      duration: 500,
+-      useNativeDriver: true,
+-      easing: Easing.bezier(0.075, 0.82, 0.165, 1),
+-    }).start();
+-  };
+-
+-  const onPressOut = (index: number) => {
+-    Animated.timing(animatedStrokeWidths[index], {
+-      toValue: strokeWidth,
+-      duration: 500,
+-      useNativeDriver: true,
+-      easing: Easing.bezier(0.075, 0.82, 0.165, 1),
+-    }).start();
+-  };
+-
+   const _getContainerStyle = (): StyleProp<ViewStyle> => [
+     styles.defaultContainer,
+     containerStyle,
+     { width: containerWidth, height: containerHeight },
+   ];
+ 
+-  const _getLabelValueStyle = (color: string): StyleProp<TextStyle> => [
+-    styles.defaultLabelValue,
+-    { color },
+-    labelValueStyle,
+-  ];
+-
+-  const _getLabelTitleStyle = (color: string): StyleProp<TextStyle> => [
+-    styles.defaultLabelTitle,
+-    { color },
+-    labelTitleStyle,
+-  ];
+-
+   const _getLabelWrapperStyle = (): Animated.WithAnimatedArray<any> => [
+     styles.defaultLabelWrapper,
+     {
+@@ -300,9 +253,6 @@ export const DonutChart = ({
+               <AnimatedPath
+                 key={`item-${i}`}
+                 ref={(el: any) => (pathRefs.current[i] = el)}
+-                onPress={() => onUpdateDisplayValue(data[i], i)}
+-                onPressIn={() => onPressIn(data[i], i)}
+-                onPressOut={() => onPressOut(i)}
+                 strokeLinecap={type}
+                 d={drawPath}
+                 opacity={animateContainerOpacity}
+@@ -314,12 +264,7 @@ export const DonutChart = ({
+           })}
+         </Svg>
+         <Animated.View style={_getLabelWrapperStyle()}>
+-          <Text style={_getLabelValueStyle(displayValue?.color)}>
+-            {displayValue?.value}
+-          </Text>
+-          <Text style={_getLabelTitleStyle(displayValue?.color)}>
+-            {displayValue?.name}
+-          </Text>
++        {info}
+         </Animated.View>
+       </View>
+     </Fragment>
+@@ -337,13 +282,4 @@ const styles = StyleSheet.create({
+     justifyContent: "center",
+     alignItems: "center",
+   },
+-
+-  defaultLabelValue: {
+-    fontSize: 32,
+-    fontWeight: "bold",
+-  },
+-
+-  defaultLabelTitle: {
+-    fontSize: 16,
+-  },
+ });
