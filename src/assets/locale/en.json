@@ -33,6 +33,13 @@
       "transactions": "Transactions",
       "overview": "Overview",
       "settings": "Settings"
-    }
+    },
+    "categories": {
+      "expenses": "Expenses",
+      "income": "Income"
+    },
+    "transactions": {},
+    "overview": {},
+    "settings": {}
   }
 }

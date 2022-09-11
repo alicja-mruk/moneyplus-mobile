@@ -66,9 +66,9 @@ export const textStyle = {
       lineHeight: '20',
     },
     label: {
-      fontSize: 'sm',
-      fontWeight: '600',
-      lineHeight: '20',
+      fontSize: 'md',
+      fontWeight: '400',
+      lineHeight: '22.5',
     },
     authTitle: {
       fontSize: '36',

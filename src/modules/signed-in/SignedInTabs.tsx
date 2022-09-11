@@ -20,7 +20,7 @@ export const SignedInTabs = () => {
       screenOptions={({ route }) => ({
         headerShown: false,
         style: {
-          backgroundColor: 'white',
+          backgroundColor: colorPalette.white,
         },
         tabBarStyle: {
           height: 64,
