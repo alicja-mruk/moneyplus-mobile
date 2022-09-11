@@ -22,7 +22,6 @@
       "hooks/*": ["src/hooks/*"],
       "locale/*": ["src/locales/*"],
       "modules/*": ["src/modules/*"],
-      "screens/*": ["src/screens/*"],
       "services/*": ["src/services/*"],
       "utils/*": ["src/utils/*"],
       "models/*": ["src/models/*"],

@@ -4,6 +4,7 @@ import { Platform } from 'react-native';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+import { colorPalette } from 'config/theme/foundations';
 import {
   SignedInTabs,
   SignedInTabsParamList,
@@ -24,11 +25,12 @@ const Stack = createStackNavigator<RootStackParamList>();
 export const RootStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Route.SignedOutStack}
+      initialRouteName={Route.SignedInTabs}
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,
         cardStyleInterpolator,
+        cardStyle: { backgroundColor: colorPalette.white },
       }}>
       <Stack.Screen name={Route.Splash} component={Splash} />
       <Stack.Screen name={Route.SignedInTabs} component={SignedInTabs} />
