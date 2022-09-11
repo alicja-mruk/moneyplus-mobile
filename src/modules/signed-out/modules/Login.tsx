@@ -22,6 +22,7 @@ export const loginFormConfig: FormConfig[] = [
     name: i18next.t('signedOut.password'),
     required: true,
     type: 'text',
+    secureTextEntry: true,
     minLength: {
       value: 8,
       message: i18next.t('form.minLength', { name: i18next.t('signedOut.password'), length: 8 }),
