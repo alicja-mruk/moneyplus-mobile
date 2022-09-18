@@ -1,8 +1,9 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 
 import { Entypo, Feather } from '@expo/vector-icons';
 import { Button, HStack, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
+import DatePicker from 'react-native-date-picker';
 
 import { CustomModal } from 'components';
 import { useModal } from 'hooks';
@@ -20,6 +21,7 @@ export const PickDateModal = forwardRef<PickDateModalHandle | undefined, Props>(
     const { t } = useTranslation();
 
     const { modalOpen, data, closeModal, openModal: _openModal } = useModal<Date | null>();
+    const [calendarOpen, setCalendarOpen] = useState(false);
 
     const _setExpenseDate = (date: Date) => {
       setExpenseDate(date);
@@ -37,7 +39,11 @@ export const PickDateModal = forwardRef<PickDateModalHandle | undefined, Props>(
     return (
       <CustomModal isOpen={modalOpen} onClose={closeModal}>
         <VStack space="2">
-          <Button variant="ghost" borderColor="gray.200" borderWidth="1">
+          <Button
+            variant="ghost"
+            borderColor="gray.200"
+            borderWidth="1"
+            onPress={() => setCalendarOpen(true)}>
             <VStack space="4" justifyContent="center" alignItems="center">
               <Entypo name="calendar" size={24} color="gray" />
               <Text>{t('signedIn.categories.bottomSheet.calendarModal.pickDay')}</Text>
@@ -76,6 +82,22 @@ export const PickDateModal = forwardRef<PickDateModalHandle | undefined, Props>(
             </Button>
           </HStack>
         </VStack>
+        <DatePicker
+          mode="date"
+          modal
+          open={calendarOpen}
+          date={new Date()}
+          onConfirm={date => {
+            if (date < new Date()) {
+              setExpenseDate(date);
+            }
+            setCalendarOpen(false);
+            closeModal();
+          }}
+          onCancel={() => {
+            setCalendarOpen(false);
+          }}
+        />
       </CustomModal>
     );
   },
