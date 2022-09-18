@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, FormControl, ScrollView, VStack } from 'native-base';
+import { Box, FormControl, ScrollView } from 'native-base';
 import {
   Control,
   Controller,
