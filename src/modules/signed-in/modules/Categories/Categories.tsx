@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
-import { Center, Input, Text, VStack } from 'native-base';
-import { useTranslation } from 'react-i18next';
+import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
-import { BottomSheetWrapper, ContentWrapper } from 'components';
+import { ContentWrapper } from 'components';
 import { useBottomSheetCustom } from 'hooks';
 import { Category } from 'models/Category';
 
-import { AddExpenseBottomSheet, CategoryItem, Keyboard } from './components';
+import { AddExpenseBottomSheet, CategoryItem } from './components';
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
-  const { t } = useTranslation();
 
   const data = mockedCategories.map(item => {
     return { value: item.amount, color: item.color, name: item.title };
