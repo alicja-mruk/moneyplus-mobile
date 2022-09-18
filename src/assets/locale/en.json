@@ -4,7 +4,9 @@
     "emailIncorrectFormat": "Email has incorrect format",
     "minLength": "{{ name }} should contain at least {{ length }} characters"
   },
-  "global": {},
+  "global": {
+    "cancel": "Cancel"
+  },
   "signedOut": {
     "email": "Email",
     "password": "Password",
@@ -36,7 +38,17 @@
     },
     "categories": {
       "expenses": "Expenses",
-      "income": "Income"
+      "income": "Income",
+      "bottomSheet": {
+        "title": "To category",
+        "expense": "Expense",
+        "income": "Income",
+        "notes": "Notes...",
+        "notesModal": {
+          "title": "Notes",
+          "placeholder": "Your notes"
+        }
+      }
     },
     "transactions": {},
     "overview": {},

@@ -64,7 +64,7 @@ export const buttonStyle = {
         },
       };
     },
-    ghost: ({ colorScheme }: Dict) => {
+    ghost: () => {
       return {
         _light: {
           bg: 'transparent',

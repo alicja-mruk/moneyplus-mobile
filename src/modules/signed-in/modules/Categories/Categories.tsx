@@ -1,59 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useWindowDimensions } from 'react-native';
 
-import { Center, Text, VStack } from 'native-base';
+import { Center, Input, Text, VStack } from 'native-base';
+import { useTranslation } from 'react-i18next';
 import { DonutChart } from 'react-native-circular-chart';
 
-import { ContentWrapper } from 'components';
+import { BottomSheetWrapper, ContentWrapper } from 'components';
+import { useBottomSheetCustom } from 'hooks';
 import { Category } from 'models/Category';
 
-import { CategoryItem } from './components';
+import { AddExpenseBottomSheet, CategoryItem, Keyboard } from './components';
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
+  const bottomSheet = useBottomSheetCustom<Category>();
+  const { t } = useTranslation();
 
   const data = mockedCategories.map(item => {
     return { value: item.amount, color: item.color, name: item.title };
   });
 
-  // TODO: move to separate hook
-  const getAbsoluteProps = (index: number) => {
-    const itemsInRow = 4;
-    const heightSpace = height / itemsInRow - 24;
-    const widthSpace = width / itemsInRow;
-
-    if (index < itemsInRow) {
-      return {
-        top: 0,
-        left: index * widthSpace,
-      };
-    }
-
-    if (index >= itemsInRow && index < 2 * itemsInRow) {
-      return {
-        top: index < itemsInRow + itemsInRow / 2 ? heightSpace : 2 * heightSpace,
-        left: index % 2 === 0 ? 0 : 3 * widthSpace,
-      };
-    }
-
-    return {
-      top: 3 * heightSpace,
-      left:
-        index % 3 === 0
-          ? widthSpace
-          : index === 2 * itemsInRow
-          ? 0
-          : index % 2 === 0
-          ? 2 * widthSpace
-          : 3 * widthSpace,
-    };
-  };
   // TODO: remove mocks
   const expenses = '2000 zł';
   const income = '14 000 zł';
 
-  const onCategoryPress = (item: Category) => {
-    // TODO: finish
+  const onAddExpense = (category: Category) => {
+    bottomSheet.open(category);
   };
 
   return (
@@ -84,17 +56,19 @@ export const Categories = () => {
 
         {mockedCategories.map((item, index) => (
           <CategoryItem
+            key={index}
             {...item}
-            onPress={() => onCategoryPress(item)}
+            onPress={() => onAddExpense(item)}
             position="absolute"
-            {...getAbsoluteProps(index)}
+            {...getAbsoluteProps(index, width, height)}
           />
         ))}
       </Center>
+
+      <AddExpenseBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
     </ContentWrapper>
   );
 };
-
 // TODO: remove
 const mockedCategories: Category[] = [
   {
@@ -153,3 +127,34 @@ const mockedCategories: Category[] = [
   },
 ];
 
+const getAbsoluteProps = (index: number, width: number, height: number) => {
+  const itemsInRow = 4;
+  const heightSpace = height / itemsInRow - 24;
+  const widthSpace = width / itemsInRow;
+
+  if (index < itemsInRow) {
+    return {
+      top: 0,
+      left: index * widthSpace,
+    };
+  }
+
+  if (index >= itemsInRow && index < 2 * itemsInRow) {
+    return {
+      top: index < itemsInRow + itemsInRow / 2 ? heightSpace : 2 * heightSpace,
+      left: index % 2 === 0 ? 0 : 3 * widthSpace,
+    };
+  }
+
+  return {
+    top: 3 * heightSpace,
+    left:
+      index % 3 === 0
+        ? widthSpace
+        : index === 2 * itemsInRow
+        ? 0
+        : index % 2 === 0
+        ? 2 * widthSpace
+        : 3 * widthSpace,
+  };
+};

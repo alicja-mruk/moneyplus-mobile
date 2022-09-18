@@ -41,17 +41,17 @@ export const textStyle = {
       lineHeight: '20',
     },
     body: {
-      fontSize: 'xs',
+      fontSize: 'sm',
       fontWeight: '400',
       lineHeight: '20',
     },
     bodyLight: {
-      fontSize: 'xs',
+      fontSize: 'sm',
       fontWeight: '300',
       lineHeight: '20',
     },
     description: {
-      fontSize: '2xs',
+      fontSize: 'xs',
       fontWeight: '400',
       lineHeight: '12',
     },
