@@ -1,5 +1,3 @@
-import { Dict } from 'native-base/lib/typescript/theme/tools';
-
 export const buttonStyle = {
   baseStyle: {
     w: '100%',
@@ -64,7 +62,7 @@ export const buttonStyle = {
         },
       };
     },
-    ghost: ({ colorScheme }: Dict) => {
+    ghost: () => {
       return {
         _light: {
           bg: 'transparent',
