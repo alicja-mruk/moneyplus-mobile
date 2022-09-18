@@ -41,36 +41,34 @@ export const Login = () => {
   };
 
   return (
-    <Container>
-      <ContentWrapper justifyContent="space-between">
-        <VStack space="4">
-          <Image source={require('assets/images/start_1.jpg')} w="100%" h="300px" />
-          <VStack mx="4" space="6">
-            <Text variant="authTitle">{t('signedOut.login.title')}</Text>
-            <CustomForm
-              scrollEnabled={false}
-              showLabels={false}
-              formConfig={loginFormConfig}
-              renderFooter={(form: RenderFooterType) => (
-                <Button onPress={() => onLoginPress(form.getValues())} isDisabled={!form.isValid}>
-                  {t('signedOut.login.login')}
-                </Button>
-              )}
-            />
-          </VStack>
+    <ContentWrapper justifyContent="space-between" flex="1">
+      <VStack space="4">
+        <Image source={require('assets/images/start_1.jpg')} w="100%" h="300px" />
+        <VStack mx="4" space="6">
+          <Text variant="authTitle">{t('signedOut.login.title')}</Text>
+          <CustomForm
+            scrollEnabled={false}
+            showLabels={false}
+            formConfig={loginFormConfig}
+            renderFooter={(form: RenderFooterType) => (
+              <Button onPress={() => onLoginPress(form.getValues())} isDisabled={!form.isValid}>
+                {t('signedOut.login.login')}
+              </Button>
+            )}
+          />
         </VStack>
+      </VStack>
 
-        <HStack justifyContent="center">
-          <Text variant="subtitle">{t('signedOut.login.newUser')} </Text>
-          <Text
-            variant="subtitle"
-            color="secondary.400"
-            fontWeight="600"
-            onPress={() => navigate(Route.Register)}>
-            {t('signedOut.login.register')}
-          </Text>
-        </HStack>
-      </ContentWrapper>
-    </Container>
+      <HStack justifyContent="center">
+        <Text variant="subtitle">{t('signedOut.login.newUser')} </Text>
+        <Text
+          variant="subtitle"
+          color="secondary.400"
+          fontWeight="600"
+          onPress={() => navigate(Route.Register)}>
+          {t('signedOut.login.register')}
+        </Text>
+      </HStack>
+    </ContentWrapper>
   );
 };

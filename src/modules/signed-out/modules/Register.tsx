@@ -5,7 +5,7 @@ import i18next from 'i18next';
 import { Button, Image, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
 
-import { Container, ContentWrapper, CustomForm } from 'components';
+import { ContentWrapper, CustomForm } from 'components';
 import { FormConfig, RenderFooterType } from 'components/CustomForm';
 
 import { loginFormConfig } from './Login';
@@ -47,27 +47,25 @@ export const Register = () => {
   };
 
   return (
-    <Container>
-      <ContentWrapper justifyContent="space-between" scrollable>
-        <VStack space="4">
-          <Image source={require('assets/images/start_3.jpg')} w="100%" h="300px" />
-          <VStack mx="4" space="6">
-            <Text variant="authTitle">{t('signedOut.register.title')}</Text>
-            <CustomForm
-              showLabels={false}
-              formConfig={formConfig}
-              renderFooter={(form: RenderFooterType) => (
-                <Button
-                  mt="6"
-                  onPress={() => onRegisterPress(form.getValues())}
-                  isDisabled={!form.isValid}>
-                  {t('signedOut.register.register')}
-                </Button>
-              )}
-            />
-          </VStack>
+    <ContentWrapper justifyContent="space-between" flex="1">
+      <VStack space="4">
+        <Image source={require('assets/images/start_3.jpg')} w="100%" h="300px" />
+        <VStack mx="4" space="6">
+          <Text variant="authTitle">{t('signedOut.register.title')}</Text>
+          <CustomForm
+            showLabels={false}
+            formConfig={formConfig}
+            renderFooter={(form: RenderFooterType) => (
+              <Button
+                mt="6"
+                onPress={() => onRegisterPress(form.getValues())}
+                isDisabled={!form.isValid}>
+                {t('signedOut.register.register')}
+              </Button>
+            )}
+          />
         </VStack>
-      </ContentWrapper>
-    </Container>
+      </VStack>
+    </ContentWrapper>
   );
 };
