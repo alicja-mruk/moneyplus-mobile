@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { Text } from 'react-native';
+
+import { ContentWrapper } from 'components';
 
 export const Transactions = () => {
   return (
-    <View>
+    <ContentWrapper>
       <Text>Transactions</Text>
-    </View>
+    </ContentWrapper>
   );
 };

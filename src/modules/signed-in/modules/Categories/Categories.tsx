@@ -8,7 +8,7 @@ import { ContentWrapper } from 'components';
 import { useBottomSheetCustom } from 'hooks';
 import { Category } from 'models/Category';
 
-import { AddExpenseBottomSheet, CategoryItem } from './components';
+import { AddRecordBottomSheet, CategoryItem } from './components';
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
@@ -63,7 +63,7 @@ export const Categories = () => {
         ))}
       </Center>
 
-      <AddExpenseBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
+      <AddRecordBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
     </ContentWrapper>
   );
 };

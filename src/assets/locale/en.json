@@ -47,6 +47,12 @@
         "notesModal": {
           "title": "Notes",
           "placeholder": "Your notes"
+        },
+        "calendarModal": {
+          "title": "Expense time",
+          "pickDay": "Pick a day",
+          "today": "Today",
+          "yesterday": "Yesterday"
         }
       }
     },
