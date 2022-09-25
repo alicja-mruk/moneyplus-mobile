@@ -15,3 +15,4 @@ export type Category = {
   iconName: CategoryIconName;
   amount: number;
 };
+
