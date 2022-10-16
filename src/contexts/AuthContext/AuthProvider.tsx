@@ -41,12 +41,15 @@ export const AuthProvider = ({ children }: Props) => {
 
   const login = async (args: LoginVars): Promise<LoginResult> => {
     try {
-      const { data } = await authAxios.post<LoginVars, LoginData>(Endpoints.login, args);
+      const {
+        data: { accessToken, refreshToken },
+      } = await authAxios.post<LoginVars, LoginData>(Endpoints.login, args);
       setAuthState({
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
+        accessToken,
+        refreshToken,
         authenticated: true,
       });
+      saveTokensToKeychain({ accessToken, refreshToken });
       return { status: 'success' };
     } catch (error) {
       if (axios.isAxiosError(error)) {
