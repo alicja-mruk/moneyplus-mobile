@@ -2,7 +2,7 @@ import React from 'react';
 
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import * as Keychain from 'react-native-keychain';
+
 
 import { Endpoints } from 'api';
 import { Constants } from 'config/constants';
@@ -14,16 +14,16 @@ type Props = {
   children: React.ReactNode;
 };
 
+const authAxios = axios.create({
+  baseURL: Constants.BASE_URL,
+});
+
+const publicAxios = axios.create({
+  baseURL: Constants.BASE_URL,
+});
+
 export const AxiosProvider = ({ children }: Props) => {
   const authContext = useAuthContext();
-
-  const authAxios = axios.create({
-    baseURL: Constants.BASE_URL,
-  });
-
-  const publicAxios = axios.create({
-    baseURL: Constants.BASE_URL,
-  });
 
   publicAxios.interceptors.request.use(
     config => {
@@ -59,13 +59,10 @@ export const AxiosProvider = ({ children }: Props) => {
         accessToken: tokenRefreshResponse.data.accessToken,
       });
 
-      await Keychain.setGenericPassword(
-        'token',
-        JSON.stringify({
-          accessToken: tokenRefreshResponse.data.accessToken,
-          refreshToken: authContext.authState.refreshToken,
-        }),
-      );
+      authContext.saveTokensToKeychain({
+        accessToken: tokenRefreshResponse.data.accessToken,
+        refreshToken: authContext.authState.refreshToken,
+      });
     } catch {
       authContext.setAuthState({
         accessToken: '',

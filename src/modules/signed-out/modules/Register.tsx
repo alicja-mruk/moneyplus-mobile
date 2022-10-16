@@ -1,16 +1,14 @@
 import React from 'react';
 
-import { useNavigation } from '@react-navigation/native';
 import i18next from 'i18next';
 import { Button, Image, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
 
 import { RegisterVars } from 'api';
-import { ContentWrapper, CustomForm, CustomToast } from 'components';
+import { ContentWrapper, CustomForm } from 'components';
 import { FormConfig, RenderFooterType } from 'components/CustomForm';
-import { useAuthContext } from 'contexts';
-import { RegisterErrorReason } from 'contexts/AuthContext';
-import { Route } from 'navigation';
+
+import { useRegister } from '../hooks';
 
 import { loginFormConfig } from './Login';
 
@@ -38,32 +36,10 @@ const formConfig: FormConfig[] = [
 
 export const Register = () => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
-  const { register } = useAuthContext();
+  const { register } = useRegister();
 
-  const onRegisterPress = async ({ email, password, firstName, lastName, age }: RegisterVars) => {
-    try {
-      const result = await register({ email, password, firstName, lastName, age });
-      if (result.status === 'success') {
-        CustomToast.success(t('signedOut.register.userCreated'));
-        navigate(Route.Login);
-        return;
-      }
-      if (result.status === 'error') {
-        switch (result.reason) {
-          case RegisterErrorReason.USER_EXISTS: {
-            CustomToast.success(t('signedOut.register.error.userExist'));
-            break;
-          }
-          default: {
-            CustomToast.error();
-            break;
-          }
-        }
-      }
-    } catch (e) {
-      CustomToast.error();
-    }
+  const onRegisterPress = async (args: RegisterVars) => {
+    await register(args);
   };
 
   return (
