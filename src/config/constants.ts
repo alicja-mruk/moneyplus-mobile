@@ -1,5 +1,5 @@
 export enum Constants {
-  BASE_URL = 'http://localhost:3000/api',
+  BASE_URL = 'https://moneyplusbackend.azurewebsites.net',
   CURRENCY = 'zł',
   LOCALE = 'en-GB',
 }
