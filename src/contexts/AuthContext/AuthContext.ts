@@ -1,24 +1,18 @@
 import { createContext } from 'react';
 
+import { LoginVars, RegisterVars } from 'api';
 
-
-import { AuthState, initAuthState } from './AuthProvider';
+import { AuthState } from './AuthProvider';
+import { RegisterResult } from './types';
 
 export type AuthContextProps = {
   authState: AuthState;
   setAuthState: (authState: AuthState) => void;
-  login: (email: string, password: string) => Promise<void>;
-  // TODO: change props
-  register: (firstName: string, lastName: string) => Promise<void>;
+  login: (args: LoginVars) => Promise<void>;
+  register: (args: RegisterVars) => Promise<RegisterResult>;
   logout: () => Promise<void>;
 };
 
-export const AuthContext = createContext<AuthContextProps>({
-  authState: initAuthState,
-  setAuthState: () => undefined,
-  login: async () => undefined,
-  register: async () => undefined,
-  logout: async () => undefined,
-});
+export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
 
 AuthContext.displayName = 'AuthContext';
