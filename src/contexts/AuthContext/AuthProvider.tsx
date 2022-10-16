@@ -3,11 +3,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
 
-import { Endpoints, LoginVars, RegisterData, RegisterVars } from 'api';
+import { Endpoints, LoginData, LoginVars, RegisterData, RegisterVars } from 'api';
 import { useAxiosContext } from 'contexts/AxiosContext';
 
 import { AuthContext } from './AuthContext';
-import { RegisterErrorReason, RegisterResult } from './types';
+import {
+  KeychainKeys,
+  LoginErrorReason,
+  LoginResult,
+  RegisterErrorReason,
+  RegisterResult,
+} from './types';
 
 type Props = {
   children: React.ReactNode;
@@ -33,9 +39,21 @@ export const AuthProvider = ({ children }: Props) => {
     setAuthState(initAuthState);
   };
 
-  const login = async (args: LoginVars) => {
-    const response = await authAxios.post<LoginVars>(Endpoints.login, args);
-    console.log(response);
+  const login = async (args: LoginVars): Promise<LoginResult> => {
+    try {
+      const { data } = await authAxios.post<LoginVars, LoginData>(Endpoints.login, args);
+      setAuthState({
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
+        authenticated: true,
+      });
+      return { status: 'success' };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        // TODO: handle error
+      }
+      return { status: 'error', reason: LoginErrorReason.UNKNOWN };
+    }
   };
 
   const register = async (args: RegisterVars): Promise<RegisterResult> => {
@@ -52,8 +70,19 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
+  const saveTokensToKeychain = async ({
+    accessToken,
+    refreshToken,
+  }: {
+    accessToken: string;
+    refreshToken: string | null;
+  }) => {
+    await Keychain.setGenericPassword(accessToken, refreshToken ?? '');
+  };
+
   return (
-    <AuthContext.Provider value={{ authState, setAuthState, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ authState, setAuthState, login, register, logout, saveTokensToKeychain }}>
       {children}
     </AuthContext.Provider>
   );
