@@ -5,9 +5,12 @@ import i18next from 'i18next';
 import { Button, HStack, Image, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
 
-import { Container, ContentWrapper, CustomForm } from 'components';
+import { LoginVars } from 'api';
+import { ContentWrapper, CustomForm } from 'components';
 import { FormConfig, RenderFooterType } from 'components/CustomForm';
 import { Route } from 'navigation';
+
+import { useLogin } from '../hooks';
 
 export const loginFormConfig: FormConfig[] = [
   {
@@ -33,11 +36,10 @@ export const loginFormConfig: FormConfig[] = [
 export const Login = () => {
   const { t } = useTranslation();
   const { navigate } = useNavigation();
+  const { login } = useLogin();
 
-  const onLoginPress = (values: { email: string; password: string }) => {
-    // TODO: login
-    // if success
-    navigate(Route.SignedInTabs);
+  const onLoginPress = async (args: LoginVars) => {
+    await login(args);
   };
 
   return (
@@ -51,7 +53,9 @@ export const Login = () => {
             showLabels={false}
             formConfig={loginFormConfig}
             renderFooter={(form: RenderFooterType) => (
-              <Button onPress={() => onLoginPress(form.getValues())} isDisabled={!form.isValid}>
+              <Button
+                onPress={() => onLoginPress(form.getValues() as LoginVars)}
+                isDisabled={!form.isValid}>
                 {t('signedOut.login.login')}
               </Button>
             )}
