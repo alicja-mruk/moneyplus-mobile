@@ -14,14 +14,12 @@ export const Splash = () => {
 
   const loadJWT = useCallback(async () => {
     try {
-      const value = await Keychain.getGenericPassword();
-      // get value
-      const jwt = JSON.parse(value.password);
+      const jwt = await Keychain.getGenericPassword();
 
       authContext.setAuthState({
-        accessToken: jwt.accessToken || null,
-        refreshToken: jwt.refreshToken || null,
-        authenticated: jwt.accessToken !== null,
+        accessToken: jwt.username || null,
+        refreshToken: jwt.password || null,
+        authenticated: jwt.username !== null,
       });
       setStatus('success');
     } catch (error) {
@@ -37,6 +35,7 @@ export const Splash = () => {
 
   useEffect(() => {
     loadJWT();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
