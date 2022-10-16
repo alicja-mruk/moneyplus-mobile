@@ -25,7 +25,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export const RootStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName={Route.SignedInTabs}
+      initialRouteName={Route.Splash}
       screenOptions={{
         headerShown: false,
         gestureEnabled: false,

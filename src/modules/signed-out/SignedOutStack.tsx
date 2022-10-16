@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { Route } from 'navigation';
 
-import { Login, Register, Splash } from './modules';
+import { Login, Register } from './modules';
 
 const Stack = createStackNavigator<SignedOutStackParamList>();
 
@@ -12,7 +12,6 @@ export const SignedOutStack = () => {
   return (
     <Stack.Navigator initialRouteName={Route.Login}>
       <Stack.Group screenOptions={{ headerShown: false }}>
-        <Stack.Screen name={Route.Splash} component={Splash} />
         <Stack.Screen name={Route.Login} component={Login} />
         <Stack.Screen name={Route.Register} component={Register} />
       </Stack.Group>

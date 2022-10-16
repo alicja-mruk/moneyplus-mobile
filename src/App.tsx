@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, View } from 'native-base';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
+import { CustomToastProvider } from 'components/CustomToast';
 import { theme } from 'config/theme';
 import { AuthProvider, AxiosProvider } from 'contexts';
 import { useLoadFonts } from 'hooks';
@@ -31,15 +32,16 @@ export const App = () => {
         <BottomSheetModalProvider>
           <NavigationContainer>
             <View flex="1" onLayout={onLayoutRootView}>
-              <AuthProvider>
-                <AxiosProvider>
+              <AxiosProvider>
+                <AuthProvider>
                   <RootStack />
-                </AxiosProvider>
-              </AuthProvider>
+                </AuthProvider>
+              </AxiosProvider>
             </View>
           </NavigationContainer>
         </BottomSheetModalProvider>
       </GestureHandlerRootView>
+      <CustomToastProvider />
     </NativeBaseProvider>
   );
 };

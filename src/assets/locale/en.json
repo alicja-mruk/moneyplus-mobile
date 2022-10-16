@@ -5,7 +5,9 @@
     "minLength": "{{ name }} should contain at least {{ length }} characters"
   },
   "global": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "error": "Something went wrong",
+    "success": "Success"
   },
   "signedOut": {
     "email": "Email",
@@ -13,7 +15,6 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "age": "Age",
-
     "login": {
       "title": "Login",
       "login": "Login",
@@ -25,7 +26,11 @@
       "firstName": "First Name",
       "lastName": "Last Name",
       "age": "Age",
-      "register": "Register"
+      "register": "Register",
+      "userCreated": "User has been created",
+      "error": {
+        "userExist": "User with this email already exists"
+      }
     }
   },
 
