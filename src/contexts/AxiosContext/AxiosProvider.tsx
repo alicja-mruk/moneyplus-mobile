@@ -4,6 +4,7 @@ import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import * as Keychain from 'react-native-keychain';
 
+import { Endpoints } from 'api';
 import { Constants } from 'config/constants';
 import { useAuthContext } from 'contexts';
 
@@ -16,7 +17,6 @@ type Props = {
 export const AxiosProvider = ({ children }: Props) => {
   const authContext = useAuthContext();
 
-  // TODO: change api
   const authAxios = axios.create({
     baseURL: Constants.BASE_URL,
   });
@@ -25,7 +25,7 @@ export const AxiosProvider = ({ children }: Props) => {
     baseURL: Constants.BASE_URL,
   });
 
-  authAxios.interceptors.request.use(
+  publicAxios.interceptors.request.use(
     config => {
       if (!config?.headers?.Authorization) {
         config.headers.Authorization = `Bearer ${authContext.authState?.accessToken}`;
@@ -46,7 +46,7 @@ export const AxiosProvider = ({ children }: Props) => {
     const options = {
       method: 'POST',
       data,
-      url: `${Constants.BASE_URL}/refreshToken`,
+      url: `${Constants.BASE_URL}/${Endpoints.refreshToken}`,
     };
 
     try {
@@ -75,7 +75,7 @@ export const AxiosProvider = ({ children }: Props) => {
     }
   };
 
-  createAuthRefreshInterceptor(authAxios, refreshAuthLogic, {});
+  createAuthRefreshInterceptor(publicAxios, refreshAuthLogic, {});
 
   return (
     <AxiosContext.Provider
