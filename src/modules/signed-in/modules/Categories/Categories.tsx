@@ -16,7 +16,6 @@ export const Categories = () => {
   const bottomSheet = useBottomSheetCustom<Category>();
 
   const { data: categories } = useGetCategories();
-  console.log({ categories });
 
   // const data = mockedCategories.map(item => {
   //   return { value: item.amount, color: item.color, name: item.categoryName };

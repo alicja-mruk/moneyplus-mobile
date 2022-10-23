@@ -3,8 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
-
-import { Endpoints } from 'api';
+import { Endpoints, LoginData, RefreshTokenVars } from 'api';
 import { Constants } from 'config/constants';
 import { useAuthContext } from 'contexts';
 
@@ -39,29 +38,27 @@ export const AxiosProvider = ({ children }: Props) => {
   );
 
   const refreshAuthLogic = async (failedRequest: any) => {
-    const data = {
+    const requestData = {
       refreshToken: authContext.authState.refreshToken,
     };
 
-    const options = {
-      method: 'POST',
-      data,
-      url: `${Constants.BASE_URL}/${Endpoints.RefreshToken}`,
-    };
-
     try {
-      const tokenRefreshResponse = await axios(options);
-      failedRequest.response.config.headers.Authorization =
-        'Bearer ' + tokenRefreshResponse.data.accessToken;
+      const { data } = await axios.post<RefreshTokenVars, LoginData>(
+        `${Constants.BASE_URL}/${Endpoints.RefreshToken}`,
+        requestData,
+      );
+
+      failedRequest.response.config.headers.Authorization = 'Bearer ' + data.accessToken;
 
       authContext.setAuthState({
         ...authContext.authState,
-        accessToken: tokenRefreshResponse.data.accessToken,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
       });
 
       authContext.saveTokensToKeychain({
-        accessToken: tokenRefreshResponse.data.accessToken,
-        refreshToken: authContext.authState.refreshToken,
+        accessToken: data.accessToken,
+        refreshToken: data.refreshToken,
       });
     } catch {
       authContext.setAuthState({
