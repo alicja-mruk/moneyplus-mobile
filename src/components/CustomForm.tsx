@@ -75,7 +75,7 @@ export const CustomForm = ({
     <>
       <ScrollView scrollEnabled={scrollEnabled}>
         {formConfig.map(item => (
-          <Box h="16">
+          <Box h="16" key={item.key}>
             <FormControl key={item.key} isInvalid={item.key in errors}>
               <Controller
                 name={item.key}

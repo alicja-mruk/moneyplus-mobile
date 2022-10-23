@@ -15,8 +15,8 @@ export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
 
-  const { data } = useGetCategories();
-  console.log({ data });
+  const { data: categories } = useGetCategories();
+  console.log({ categories });
 
   // const data = mockedCategories.map(item => {
   //   return { value: item.amount, color: item.color, name: item.categoryName };
@@ -56,7 +56,7 @@ export const Categories = () => {
           }
         /> */}
 
-        {/* {mockedCategories.map((item, index) => (
+        {categories?.map((item, index) => (
           <CategoryItem
             key={index}
             {...item}
@@ -64,7 +64,7 @@ export const Categories = () => {
             position="absolute"
             {...getAbsoluteProps(index, width, height)}
           />
-        ))} */}
+        ))}
       </Center>
 
       <AddRecordBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
