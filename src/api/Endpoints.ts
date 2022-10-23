@@ -5,4 +5,5 @@ export enum Endpoints {
   Profile = 'api/profile',
   Categories = 'api/categories',
   Expenses = 'api/expenses',
+  EditExpenses = 'api/expenses/edit',
 }
