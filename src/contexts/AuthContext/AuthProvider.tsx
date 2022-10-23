@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: Props) => {
     try {
       const {
         data: { accessToken, refreshToken },
-      } = await authAxios.post<LoginVars, LoginData>(Endpoints.login, args);
+      } = await authAxios.post<LoginVars, LoginData>(Endpoints.Login, args);
       setAuthState({
         accessToken,
         refreshToken,
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const register = async (args: RegisterVars): Promise<RegisterResult> => {
     try {
-      await authAxios.post<RegisterVars, RegisterData>(Endpoints.register, args);
+      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, args);
       return { status: 'success' };
     } catch (error) {
       if (axios.isAxiosError(error)) {

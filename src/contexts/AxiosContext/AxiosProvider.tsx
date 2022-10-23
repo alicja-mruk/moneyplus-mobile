@@ -46,7 +46,7 @@ export const AxiosProvider = ({ children }: Props) => {
     const options = {
       method: 'POST',
       data,
-      url: `${Constants.BASE_URL}/${Endpoints.refreshToken}`,
+      url: `${Constants.BASE_URL}/${Endpoints.RefreshToken}`,
     };
 
     try {
