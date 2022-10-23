@@ -28,3 +28,11 @@ export type LoginData = {
 export type RefreshTokenVars = {
   refreshToken: string;
 };
+
+export type GetUserData = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+};
