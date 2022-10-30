@@ -8,16 +8,17 @@ import { Constants } from 'config/constants';
 import { Category, CategoryIconName } from 'models/Category';
 
 type Props = {
+  totalExpense: number;
   currency?: string;
   onPress: () => void;
 } & Category &
   InterfacePressableProps;
 
 export const CategoryItem = ({
-  title,
+  categoryName,
   color,
   iconName,
-  amount,
+  totalExpense,
   currency = Constants.CURRENCY,
   onPress,
   ...rest
@@ -32,17 +33,17 @@ export const CategoryItem = ({
           w="72px"
           bg={isPressed ? 'secondary.400:alpha.20' : 'transparent'}
           rounded="full">
-          <Text variant="body" color="primary.100" noOfLines={1}>
-            {title}
+          <Text variant="body" color={color} noOfLines={1}>
+            {categoryName}
           </Text>
           <Circle size="12" bg={color}>
             {getIconByName(iconName)}
           </Circle>
           <HStack space="1" justifyContent="center">
-            <Text variant="bodyBold" color={amount === 0 ? 'gray.400' : color} noOfLines={1}>
-              {amount}
+            <Text variant="bodyBold" color={totalExpense === 0 ? 'gray.400' : color} noOfLines={1}>
+              {totalExpense}
             </Text>
-            <Text variant="body" color={amount === 0 ? 'gray.400' : color} noOfLines={1}>
+            <Text variant="body" color={totalExpense === 0 ? 'gray.400' : color} noOfLines={1}>
               {currency}
             </Text>
           </HStack>

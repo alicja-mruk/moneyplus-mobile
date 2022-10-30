@@ -1,25 +1,40 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 
 import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
 import { ContentWrapper } from 'components';
+import { Constants } from 'config/constants';
+import { colorPalette } from 'config/theme/foundations';
 import { useBottomSheetCustom } from 'hooks';
+import { useCategoriesWithExpense } from 'hooks/api';
 import { Category } from 'models/Category';
 
 import { AddRecordBottomSheet, CategoryItem } from './components';
+
+// if every value is 0 it causes crash
+const noExpensesChartData = [
+  { value: 250, color: colorPalette.gray[200], name: '' },
+  { value: 250, color: colorPalette.gray[200], name: '' },
+];
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
 
-  const data = mockedCategories.map(item => {
-    return { value: item.amount, color: item.color, name: item.title };
-  });
+  const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
+
+  const chartData = useMemo(() => {
+    if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
+      return categoriesWithExpense.map(category => {
+        return { value: category.totalExpense, color: category.color, name: category.categoryName };
+      });
+    }
+    return noExpensesChartData;
+  }, [categoriesWithExpense]);
 
   // TODO: remove mocks
-  const expenses = '2000 zł';
   const income = '14 000 zł';
 
   const onAddExpense = (category: Category) => {
@@ -30,7 +45,7 @@ export const Categories = () => {
     <ContentWrapper>
       <Center flex="1" mb="7">
         <DonutChart
-          data={data}
+          data={chartData}
           strokeWidth={10}
           radius={105}
           containerWidth={width}
@@ -43,7 +58,7 @@ export const Categories = () => {
             <VStack alignItems="center" justifyContent="center">
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
-                {expenses}
+                {`${totalExpenses} ${Constants.CURRENCY}`}
               </Text>
               <Text color="green.500" variant="body">
                 {income}
@@ -51,8 +66,7 @@ export const Categories = () => {
             </VStack>
           }
         />
-
-        {mockedCategories.map((item, index) => (
+        {categoriesWithExpense?.map((item, index) => (
           <CategoryItem
             key={index}
             {...item}
@@ -67,63 +81,6 @@ export const Categories = () => {
     </ContentWrapper>
   );
 };
-// TODO: remove
-const mockedCategories: Category[] = [
-  {
-    title: 'Groceries',
-    color: '#89AC76',
-    iconName: 'groceries',
-    amount: 340,
-  },
-  {
-    title: 'Restaurant',
-    color: '#5B3A29',
-    iconName: 'restaurant',
-    amount: 0,
-  },
-  {
-    title: 'Leasure',
-    color: '#606E8C',
-    iconName: 'leasure',
-    amount: 10,
-  },
-  {
-    title: 'Transport',
-    color: '#F5D033',
-    iconName: 'transport',
-    amount: 54,
-  },
-  {
-    title: 'Health',
-    color: '#E63244',
-    iconName: 'health',
-    amount: 32,
-  },
-  {
-    title: 'Gift',
-    color: '#00BB2D',
-    iconName: 'gift',
-    amount: 0,
-  },
-  {
-    title: 'Family',
-    color: '#C2B078',
-    iconName: 'family',
-    amount: 1200,
-  },
-  {
-    title: 'Shopping',
-    color: '#D36E70',
-    iconName: 'family',
-    amount: 900,
-  },
-  {
-    title: 'Every Month',
-    color: '#434B4D',
-    iconName: 'every-month',
-    amount: 99.99,
-  },
-];
 
 const getAbsoluteProps = (index: number, width: number, height: number) => {
   const itemsInRow = 4;

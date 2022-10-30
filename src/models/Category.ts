@@ -10,9 +10,9 @@ export type CategoryIconName =
   | 'every-month';
 
 export type Category = {
-  title: string;
+  id: string;
+  categoryName: string;
   color: string;
   iconName: CategoryIconName;
-  amount: number;
+  typeOfCategory: string;
 };
-

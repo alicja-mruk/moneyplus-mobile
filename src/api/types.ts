@@ -1,3 +1,5 @@
+import { Expense } from 'models';
+
 export type RegisterVars = {
   email: string;
   password: string;
@@ -27,4 +29,36 @@ export type LoginData = {
 
 export type RefreshTokenVars = {
   refreshToken: string;
+};
+
+export type GetUserData = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  age: number;
+  email: string;
+};
+
+export type EditExpenseVars = {
+  id: string;
+  categoryId: string;
+  expenseName: string;
+  expenseValue: string;
+};
+
+export type AddExpenseVars = {
+  id: string;
+  categoryId: string;
+  expenseName: string;
+  expenseValue: string;
+};
+
+export type DeleteExpenseVars = {
+  id: string;
+};
+
+export type EditExpenseData = {
+  data: {
+    expense: Expense;
+  };
 };

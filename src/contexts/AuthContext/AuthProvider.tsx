@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
 
 import { Endpoints, LoginData, LoginVars, RegisterData, RegisterVars } from 'api';
 import { useAxiosContext } from 'contexts/AxiosContext';
+import { Route } from 'navigation';
 
 import { AuthContext } from './AuthContext';
-import {
-  KeychainKeys,
-  LoginErrorReason,
-  LoginResult,
-  RegisterErrorReason,
-  RegisterResult,
-} from './types';
+import { LoginErrorReason, LoginResult, RegisterErrorReason, RegisterResult } from './types';
 
 type Props = {
   children: React.ReactNode;
@@ -33,17 +29,22 @@ export const initAuthState = {
 export const AuthProvider = ({ children }: Props) => {
   const [authState, setAuthState] = useState<AuthState>(initAuthState);
   const { authAxios } = useAxiosContext();
+  const navigation = useNavigation();
 
   const logout = async () => {
     await Keychain.resetGenericPassword();
     setAuthState(initAuthState);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: Route.SignedOutStack }],
+    });
   };
 
   const login = async (args: LoginVars): Promise<LoginResult> => {
     try {
       const {
         data: { accessToken, refreshToken },
-      } = await authAxios.post<LoginVars, LoginData>(Endpoints.login, args);
+      } = await authAxios.post<LoginVars, LoginData>(Endpoints.Login, args);
       setAuthState({
         accessToken,
         refreshToken,
@@ -61,7 +62,7 @@ export const AuthProvider = ({ children }: Props) => {
 
   const register = async (args: RegisterVars): Promise<RegisterResult> => {
     try {
-      await authAxios.post<RegisterVars, RegisterData>(Endpoints.register, args);
+      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, args);
       return { status: 'success' };
     } catch (error) {
       if (axios.isAxiosError(error)) {

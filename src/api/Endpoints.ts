@@ -1,5 +1,10 @@
-export const Endpoints = {
-  register: 'api/register',
-  login: 'api/login',
-  refreshToken: 'api/refresh',
-} as const;
+export enum Endpoints {
+  Register = 'api/register',
+  Login = 'api/login',
+  RefreshToken = 'api/refresh',
+  Profile = 'api/profile',
+  Categories = 'api/categories',
+  Expenses = 'api/expenses',
+  EditExpenses = 'api/expenses/edit',
+  Receipts = 'api/receipts',
+}
