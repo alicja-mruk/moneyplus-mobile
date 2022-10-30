@@ -35,11 +35,11 @@ export const App = () => {
           <BottomSheetModalProvider>
             <NavigationContainer>
               <View flex="1" onLayout={onLayoutRootView}>
-                <AxiosProvider>
-                  <AuthProvider>
+                <AuthProvider>
+                  <AxiosProvider>
                     <RootStack />
-                  </AuthProvider>
-                </AxiosProvider>
+                  </AxiosProvider>
+                </AuthProvider>
               </View>
             </NavigationContainer>
           </BottomSheetModalProvider>

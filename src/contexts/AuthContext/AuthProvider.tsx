@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
 
 import { Endpoints, LoginData, LoginVars, RegisterData, RegisterVars } from 'api';
 import { useAxiosContext } from 'contexts/AxiosContext';
+import { Route } from 'navigation';
 
 import { AuthContext } from './AuthContext';
-import {
-  KeychainKeys,
-  LoginErrorReason,
-  LoginResult,
-  RegisterErrorReason,
-  RegisterResult,
-} from './types';
+import { LoginErrorReason, LoginResult, RegisterErrorReason, RegisterResult } from './types';
 
 type Props = {
   children: React.ReactNode;
@@ -33,10 +29,15 @@ export const initAuthState = {
 export const AuthProvider = ({ children }: Props) => {
   const [authState, setAuthState] = useState<AuthState>(initAuthState);
   const { authAxios } = useAxiosContext();
+  const navigation = useNavigation();
 
   const logout = async () => {
     await Keychain.resetGenericPassword();
     setAuthState(initAuthState);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: Route.SignedOutStack }],
+    });
   };
 
   const login = async (args: LoginVars): Promise<LoginResult> => {

@@ -1,28 +1,40 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 
 import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
 import { ContentWrapper } from 'components';
+import { Constants } from 'config/constants';
+import { colorPalette } from 'config/theme/foundations';
 import { useBottomSheetCustom } from 'hooks';
-import { useGetCategories } from 'hooks/api';
+import { useCategoriesWithExpense } from 'hooks/api';
 import { Category } from 'models/Category';
 
 import { AddRecordBottomSheet, CategoryItem } from './components';
+
+// if every value is 0 it causes crash
+const noExpensesChartData = [
+  { value: 250, color: colorPalette.gray[200], name: '' },
+  { value: 250, color: colorPalette.gray[200], name: '' },
+];
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
 
-  const { data: categories } = useGetCategories();
+  const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
 
-  // const data = mockedCategories.map(item => {
-  //   return { value: item.amount, color: item.color, name: item.categoryName };
-  // });
+  const chartData = useMemo(() => {
+    if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
+      return categoriesWithExpense.map(category => {
+        return { value: category.totalExpense, color: category.color, name: category.categoryName };
+      });
+    }
+    return noExpensesChartData;
+  }, [categoriesWithExpense]);
 
   // TODO: remove mocks
-  const expenses = '2000 zł';
   const income = '14 000 zł';
 
   const onAddExpense = (category: Category) => {
@@ -32,8 +44,8 @@ export const Categories = () => {
   return (
     <ContentWrapper>
       <Center flex="1" mb="7">
-        {/* <DonutChart
-          data={data}
+        <DonutChart
+          data={chartData}
           strokeWidth={10}
           radius={105}
           containerWidth={width}
@@ -46,16 +58,15 @@ export const Categories = () => {
             <VStack alignItems="center" justifyContent="center">
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
-                {expenses}
+                {`${totalExpenses} ${Constants.CURRENCY}`}
               </Text>
               <Text color="green.500" variant="body">
                 {income}
               </Text>
             </VStack>
           }
-        /> */}
-
-        {categories?.map((item, index) => (
+        />
+        {categoriesWithExpense?.map((item, index) => (
           <CategoryItem
             key={index}
             {...item}

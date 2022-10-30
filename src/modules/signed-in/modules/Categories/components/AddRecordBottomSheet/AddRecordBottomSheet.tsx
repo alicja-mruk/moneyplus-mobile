@@ -42,7 +42,7 @@ export const AddRecordBottomSheet = forwardRef<BottomSheetModalMethods, Props>(
     return (
       <BottomSheetWrapper snapPoints={[600]} ref={ref} onClose={onClose}>
         <VStack space="4">
-          <Header color={category?.color} title={category?.title} />
+          <Header color={category?.color} title={category?.categoryName} />
           <VStack alignItems="center" justifyContent="center">
             <Text color={category?.color} variant="input">
               {t('signedIn.categories.bottomSheet.expense')}

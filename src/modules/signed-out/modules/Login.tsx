@@ -45,7 +45,7 @@ export const Login = () => {
   return (
     <ContentWrapper justifyContent="space-between" flex="1">
       <VStack space="4">
-        <Image source={require('assets/images/start_1.jpg')} w="100%" h="300px" />
+        <Image source={require('assets/images/start_1.jpg')} w="100%" h="300px" alt="logo" />
         <VStack mx="4" space="6">
           <Text variant="authTitle">{t('signedOut.login.title')}</Text>
           <CustomForm
