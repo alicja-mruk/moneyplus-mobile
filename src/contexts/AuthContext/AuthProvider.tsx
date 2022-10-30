@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
 import * as Keychain from 'react-native-keychain';
 
-import { Endpoints, LoginData, LoginVars, RegisterData, RegisterVars } from 'api';
-import { useAxiosContext } from 'contexts/AxiosContext';
 import { Route } from 'navigation';
 
 import { AuthContext } from './AuthContext';
-import { LoginErrorReason, LoginResult, RegisterErrorReason, RegisterResult } from './types';
 
 type Props = {
   children: React.ReactNode;
@@ -20,6 +16,7 @@ export type AuthState = {
   refreshToken: string | null;
   authenticated: boolean | null;
 };
+
 export const initAuthState = {
   accessToken: null,
   refreshToken: null,
@@ -28,7 +25,6 @@ export const initAuthState = {
 
 export const AuthProvider = ({ children }: Props) => {
   const [authState, setAuthState] = useState<AuthState>(initAuthState);
-  const { authAxios } = useAxiosContext();
   const navigation = useNavigation();
 
   const logout = async () => {
@@ -40,40 +36,6 @@ export const AuthProvider = ({ children }: Props) => {
     });
   };
 
-  const login = async (args: LoginVars): Promise<LoginResult> => {
-    try {
-      const {
-        data: { accessToken, refreshToken },
-      } = await authAxios.post<LoginVars, LoginData>(Endpoints.Login, args);
-      setAuthState({
-        accessToken,
-        refreshToken,
-        authenticated: true,
-      });
-      saveTokensToKeychain({ accessToken, refreshToken });
-      return { status: 'success' };
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        // TODO: handle error
-      }
-      return { status: 'error', reason: LoginErrorReason.UNKNOWN };
-    }
-  };
-
-  const register = async (args: RegisterVars): Promise<RegisterResult> => {
-    try {
-      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, args);
-      return { status: 'success' };
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error?.response?.status === 409) {
-          return { status: 'error', reason: RegisterErrorReason.USER_EXISTS };
-        }
-      }
-      return { status: 'error', reason: RegisterErrorReason.UNKNOWN };
-    }
-  };
-
   const saveTokensToKeychain = async ({
     accessToken,
     refreshToken,
@@ -81,12 +43,15 @@ export const AuthProvider = ({ children }: Props) => {
     accessToken: string;
     refreshToken: string | null;
   }) => {
-    await Keychain.setGenericPassword(accessToken, refreshToken ?? '');
+    try {
+      await Keychain.setGenericPassword(accessToken, refreshToken ?? '');
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
-    <AuthContext.Provider
-      value={{ authState, setAuthState, login, register, logout, saveTokensToKeychain }}>
+    <AuthContext.Provider value={{ authState, setAuthState, logout, saveTokensToKeychain }}>
       {children}
     </AuthContext.Provider>
   );

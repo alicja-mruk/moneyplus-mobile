@@ -35,7 +35,7 @@ export const loginFormConfig: FormConfig[] = [
 
 export const Login = () => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const { login } = useLogin();
 
   const onLoginPress = async (args: LoginVars) => {
@@ -64,12 +64,12 @@ export const Login = () => {
       </VStack>
 
       <HStack justifyContent="center">
-        <Text variant="subtitle">{t('signedOut.login.newUser')} </Text>
+        <Text variant="subtitle">{t('signedOut.login.newUser')}</Text>
         <Text
           variant="subtitle"
           color="secondary.400"
           fontWeight="600"
-          onPress={() => navigate(Route.Register)}>
+          onPress={() => navigation.navigate(Route.Register)}>
           {t('signedOut.login.register')}
         </Text>
       </HStack>
