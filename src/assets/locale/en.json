@@ -61,8 +61,15 @@
         }
       }
     },
-    "transactions": {},
-    "overview": {},
-    "settings": {}
+    "transactions": {
+      "title": "Transactions"
+    },
+    "overview": {
+      "title": "Overview"
+    },
+    "settings": {
+      "title": "Settings",
+      "logout": "Logout"
+    }
   }
 }

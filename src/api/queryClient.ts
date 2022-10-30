@@ -6,4 +6,5 @@ export enum CacheKey {
   User = 'user',
   Categories = 'categories',
   Expenses = 'expenses',
+  Receipts = 'receipts',
 }

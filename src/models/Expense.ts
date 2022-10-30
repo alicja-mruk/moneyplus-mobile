@@ -4,6 +4,6 @@ export type Expense = {
   id: string;
   category: Category;
   expenseName: string;
-  expenseValue: string;
+  expenseValue: number;
   creationDate: string;
 };
