@@ -59,7 +59,8 @@
           "today": "Today",
           "yesterday": "Yesterday"
         }
-      }
+      },
+      "addExpenseSuccess": "Successfully added expense to category {{ name }}"
     },
     "transactions": {
       "title": "Transactions"

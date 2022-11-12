@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { AntDesign, FontAwesome, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { Circle, HStack, Pressable, Text, VStack } from 'native-base';
@@ -23,6 +23,11 @@ export const CategoryItem = ({
   onPress,
   ...rest
 }: Props) => {
+  const expenseValue = useMemo(
+    () => (totalExpense == 0 ? '0' : totalExpense.toString().replace(/^0+/, '')),
+    [totalExpense],
+  );
+
   return (
     <Pressable {...rest} onPress={onPress}>
       {({ isPressed }) => (
@@ -41,7 +46,7 @@ export const CategoryItem = ({
           </Circle>
           <HStack space="1" justifyContent="center">
             <Text variant="bodyBold" color={totalExpense === 0 ? 'gray.400' : color} noOfLines={1}>
-              {totalExpense}
+              {expenseValue}
             </Text>
             <Text variant="body" color={totalExpense === 0 ? 'gray.400' : color} noOfLines={1}>
               {currency}
