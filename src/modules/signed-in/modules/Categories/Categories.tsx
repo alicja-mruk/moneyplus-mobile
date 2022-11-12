@@ -19,6 +19,8 @@ const noExpensesChartData = [
   { value: 250, color: colorPalette.gray[200], name: '' },
 ];
 
+const CONTAINER_HEIGHT = 130;
+
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
@@ -26,11 +28,18 @@ export const Categories = () => {
   const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
 
   const chartData = useMemo(() => {
-    if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
-      return categoriesWithExpense.map(category => {
-        return { value: category.totalExpense, color: category.color, name: category.categoryName };
-      });
+    if (categoriesWithExpense.length > 0) {
+      if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
+        return categoriesWithExpense.map(category => {
+          return {
+            value: category.totalExpense,
+            color: category.color,
+            name: category.categoryName,
+          };
+        });
+      }
     }
+
     return noExpensesChartData;
   }, [categoriesWithExpense]);
 
@@ -41,6 +50,11 @@ export const Categories = () => {
     bottomSheet.open(category);
   };
 
+  const expenseValue = useMemo(() => {
+    const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
+    return `${trimmedZeros} ${Constants.CURRENCY}`;
+  }, [totalExpenses]);
+
   return (
     <ContentWrapper>
       <Center flex="1" mb="7">
@@ -49,7 +63,7 @@ export const Categories = () => {
           strokeWidth={10}
           radius={105}
           containerWidth={width}
-          containerHeight={130 * 2}
+          containerHeight={CONTAINER_HEIGHT * 2}
           type="round"
           startAngle={0}
           endAngle={360}
@@ -58,7 +72,7 @@ export const Categories = () => {
             <VStack alignItems="center" justifyContent="center">
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
-                {`${totalExpenses} ${Constants.CURRENCY}`}
+                {expenseValue}
               </Text>
               <Text color="green.500" variant="body">
                 {income}
@@ -77,7 +91,11 @@ export const Categories = () => {
         ))}
       </Center>
 
-      <AddRecordBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
+      <AddRecordBottomSheet
+        category={bottomSheet.data}
+        ref={bottomSheet.ref}
+        onAddExpenseCallback={bottomSheet.close}
+      />
     </ContentWrapper>
   );
 };
