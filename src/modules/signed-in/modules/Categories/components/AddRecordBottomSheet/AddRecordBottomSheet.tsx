@@ -18,10 +18,11 @@ import { useAddRecord } from './useAddRecord';
 
 type Props = {
   category?: Category;
+  onAddExpenseCallback: () => void;
 };
 
 export const AddRecordBottomSheet = forwardRef<BottomSheetModalMethods, Props>(
-  ({ category }, ref) => {
+  ({ category, onAddExpenseCallback }, ref) => {
     const { t } = useTranslation();
 
     const noteModalRef = useRef<NotesModalHandle>();
@@ -37,7 +38,7 @@ export const AddRecordBottomSheet = forwardRef<BottomSheetModalMethods, Props>(
       onAddExpense,
       onClose,
       onKeyboardPress,
-    } = useAddRecord(category);
+    } = useAddRecord(category, onAddExpenseCallback);
 
     return (
       <BottomSheetWrapper snapPoints={[600]} ref={ref} onClose={onClose}>

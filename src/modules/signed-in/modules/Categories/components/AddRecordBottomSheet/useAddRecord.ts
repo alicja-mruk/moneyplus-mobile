@@ -1,12 +1,17 @@
 import { useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
+
 import { AddExpenseVars } from 'api';
+import { CustomToast } from 'components';
 import { useAddExpense } from 'hooks/api';
 import { Category } from 'models';
 
 const COMMA = ',';
 
-export const useAddRecord = (category?: Category) => {
+export const useAddRecord = (category: Category, onAddExpenseCallback: () => void) => {
+  const { t } = useTranslation();
+
   const [{ expense, startState }, setExpense] = useState({ expense: '0', startState: true });
   const [note, setNote] = useState('');
   const [expenseDate, setExpenseDate] = useState<Date | null>(new Date(Date.now()));
@@ -46,18 +51,22 @@ export const useAddRecord = (category?: Category) => {
   };
 
   const onAddExpense = async () => {
-    // TODO: add expense date
     if (!category) return;
 
     const expenseVars: AddExpenseVars = {
-      categoryId: category?.id,
-      expenseName: note,
-      expenseValue: expense,
+      categoryId: category.id,
+      name: note,
+      value: Number(expense),
+      creationDate: expenseDate?.toISOString(),
     };
     try {
       await addExpenseAsync({ payload: expenseVars });
+      CustomToast.success(t('signedIn.categories.addExpenseSuccess'));
     } catch (e) {
-      console.error(e);
+      CustomToast.error();
+    } finally {
+      onClose();
+      onAddExpenseCallback();
     }
   };
 

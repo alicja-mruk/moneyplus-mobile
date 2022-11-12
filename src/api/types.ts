@@ -42,14 +42,16 @@ export type GetUserData = {
 export type EditExpenseVars = {
   id: string;
   categoryId: string;
-  expenseName: string;
-  expenseValue: string;
+  name: string;
+  value: number;
+  creationDate?: string;
 };
 
 export type AddExpenseVars = {
   categoryId: string;
-  expenseName: string;
-  expenseValue: string;
+  name: string;
+  value: number;
+  creationDate?: string;
 };
 
 export type DeleteExpenseVars = {
