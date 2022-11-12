@@ -19,6 +19,8 @@ const noExpensesChartData = [
   { value: 250, color: colorPalette.gray[200], name: '' },
 ];
 
+const CONTAINER_HEIGHT = 130;
+
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
   const bottomSheet = useBottomSheetCustom<Category>();
@@ -49,7 +51,7 @@ export const Categories = () => {
           strokeWidth={10}
           radius={105}
           containerWidth={width}
-          containerHeight={130 * 2}
+          containerHeight={CONTAINER_HEIGHT * 2}
           type="round"
           startAngle={0}
           endAngle={360}
