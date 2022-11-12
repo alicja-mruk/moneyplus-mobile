@@ -37,7 +37,7 @@ export const AddRecordBottomSheet = forwardRef<BottomSheetModalMethods, Props>(
       onAddExpense,
       onClose,
       onKeyboardPress,
-    } = useAddRecord();
+    } = useAddRecord(category);
 
     return (
       <BottomSheetWrapper snapPoints={[600]} ref={ref} onClose={onClose}>

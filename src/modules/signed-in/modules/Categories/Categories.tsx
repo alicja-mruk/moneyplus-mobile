@@ -43,6 +43,11 @@ export const Categories = () => {
     bottomSheet.open(category);
   };
 
+  const expenseValue = useMemo(() => {
+    const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
+    return `${trimmedZeros} ${Constants.CURRENCY}`;
+  }, [totalExpenses]);
+
   return (
     <ContentWrapper>
       <Center flex="1" mb="7">
@@ -60,7 +65,7 @@ export const Categories = () => {
             <VStack alignItems="center" justifyContent="center">
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
-                {`${totalExpenses} ${Constants.CURRENCY}`}
+                {expenseValue}
               </Text>
               <Text color="green.500" variant="body">
                 {income}
