@@ -47,7 +47,6 @@ export type EditExpenseVars = {
 };
 
 export type AddExpenseVars = {
-  id: string;
   categoryId: string;
   expenseName: string;
   expenseValue: string;

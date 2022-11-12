@@ -1,11 +1,17 @@
 import { useState } from 'react';
 
+import { AddExpenseVars } from 'api';
+import { useAddExpense } from 'hooks/api';
+import { Category } from 'models';
+
 const COMMA = ',';
 
-export const useAddRecord = () => {
+export const useAddRecord = (category?: Category) => {
   const [{ expense, startState }, setExpense] = useState({ expense: '0', startState: true });
   const [note, setNote] = useState('');
   const [expenseDate, setExpenseDate] = useState<Date | null>(new Date(Date.now()));
+
+  const { mutateAsync: addExpenseAsync } = useAddExpense();
 
   const onKeyboardPress = (item: string) => {
     const isComma = item === COMMA;
@@ -39,9 +45,21 @@ export const useAddRecord = () => {
     });
   };
 
-  const onAddExpense = () => [
-    // TODO: CALL API
-  ];
+  const onAddExpense = async () => {
+    // TODO: add expense date
+    if (!category) return;
+
+    const expenseVars: AddExpenseVars = {
+      categoryId: category?.id,
+      expenseName: note,
+      expenseValue: expense,
+    };
+    try {
+      await addExpenseAsync({ payload: expenseVars });
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   return {
     expense,

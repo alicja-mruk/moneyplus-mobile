@@ -13,7 +13,7 @@ export const useCategoriesWithExpense = () => {
       categories?.map(category => {
         const totalExpense =
           expenses
-            ?.filter(expense => expense.category.id === category.id)
+            ?.filter(expense => expense.category?.id === category?.id)
             .reduce((acc, expense) => acc + expense.expenseValue, 0) ?? 0;
 
         return {
