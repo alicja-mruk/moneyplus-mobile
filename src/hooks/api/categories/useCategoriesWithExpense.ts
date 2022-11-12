@@ -1,32 +1,39 @@
 import { useMemo } from 'react';
 
+import { Category } from 'models';
+
 import { useGetExpenses } from '../expenses';
 
 import { useGetCategories } from './useGetCategories';
+
+export type CategoryWithExpense = Category & { totalExpense: number };
 
 export const useCategoriesWithExpense = () => {
   const { data: categories } = useGetCategories();
   const { data: expenses } = useGetExpenses();
 
-  const categoriesWithExpense = useMemo(
-    () =>
-      categories?.map(category => {
-        const totalExpense =
-          expenses
-            ?.filter(expense => expense.category?.id === category?.id)
-            .reduce((acc, expense) => acc + expense.expenseValue, 0) ?? 0;
+  const categoriesWithExpense = useMemo(() => {
+    if (!categories) return [] as CategoryWithExpense[];
 
-        return {
-          ...category,
-          totalExpense,
-        };
-      }) ?? [],
-    [categories, expenses],
+    return categories.map(category => {
+      const expensesFromCategory = expenses?.filter(
+        expense => expense?.category?.id === category.id,
+      );
+
+      const totalExpense =
+        expensesFromCategory?.reduce((acc, expense) => acc + expense.value, 0) ?? 0;
+
+      return {
+        ...category,
+        totalExpense,
+      };
+    });
+  }, [categories, expenses]);
+
+  const totalExpenses = useMemo(
+    () => expenses?.reduce((acc, expense) => acc + expense.value, 0) ?? 0,
+    [expenses],
   );
-
-  const totalExpenses =
-    useMemo(() => expenses?.reduce((acc, expense) => acc + expense.expenseValue, 0), [expenses]) ??
-    0;
 
   return {
     categoriesWithExpense,

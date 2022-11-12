@@ -28,11 +28,18 @@ export const Categories = () => {
   const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
 
   const chartData = useMemo(() => {
-    if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
-      return categoriesWithExpense.map(category => {
-        return { value: category.totalExpense, color: category.color, name: category.categoryName };
-      });
+    if (categoriesWithExpense.length > 0) {
+      if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
+        return categoriesWithExpense.map(category => {
+          return {
+            value: category.totalExpense,
+            color: category.color,
+            name: category.categoryName,
+          };
+        });
+      }
     }
+
     return noExpensesChartData;
   }, [categoriesWithExpense]);
 
@@ -84,7 +91,11 @@ export const Categories = () => {
         ))}
       </Center>
 
-      <AddRecordBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
+      <AddRecordBottomSheet
+        category={bottomSheet.data}
+        ref={bottomSheet.ref}
+        onAddExpenseCallback={bottomSheet.close}
+      />
     </ContentWrapper>
   );
 };
