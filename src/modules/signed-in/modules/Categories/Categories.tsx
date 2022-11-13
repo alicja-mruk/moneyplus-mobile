@@ -92,7 +92,7 @@ export const Categories = () => {
       </Center>
 
       <AddRecordBottomSheet
-        category={bottomSheet.data}
+        category={bottomSheet.data as Category}
         ref={bottomSheet.ref}
         onAddExpenseCallback={bottomSheet.close}
       />

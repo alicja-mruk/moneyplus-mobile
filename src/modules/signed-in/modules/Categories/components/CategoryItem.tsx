@@ -58,7 +58,7 @@ export const CategoryItem = ({
   );
 };
 
-const getIconByName = (name: CategoryIconName) => {
+export const getIconByName = (name: CategoryIconName) => {
   const commonProps = { size: 24, color: 'white' };
   switch (name) {
     case 'groceries':

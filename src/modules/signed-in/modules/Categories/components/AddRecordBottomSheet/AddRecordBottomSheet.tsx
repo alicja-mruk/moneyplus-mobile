@@ -17,7 +17,7 @@ import { PickDateModal, PickDateModalHandle } from './PickDateModal';
 import { useAddRecord } from './useAddRecord';
 
 type Props = {
-  category?: Category;
+  category: Category;
   onAddExpenseCallback: () => void;
 };
 
