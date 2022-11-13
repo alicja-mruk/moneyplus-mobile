@@ -70,7 +70,13 @@
     },
     "settings": {
       "title": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "user": {
+        "age": "Age",
+        "email": "Email",
+        "firstName": "First Name",
+        "lastName": "Last Name"
+      }
     }
   }
 }
