@@ -66,7 +66,8 @@
       "title": "Transactions"
     },
     "overview": {
-      "title": "Overview"
+      "title": "Overview",
+      "showMore": "Show more"
     },
     "settings": {
       "title": "Settings",
