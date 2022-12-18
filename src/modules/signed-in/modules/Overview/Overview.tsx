@@ -1,17 +1,15 @@
 import React, { useMemo, useState } from 'react';
 
-import { ArrowDownIcon, Button, Circle, Divider, HStack, Text, VStack } from 'native-base';
-import { useTranslation } from 'react-i18next';
+import { ArrowDownIcon, Button, Text } from 'native-base';
 
 import { ContentWrapper } from 'components';
-import { Constants } from 'config/constants';
+import { useTranslationPrefix } from 'config/i18n';
 import { useCategoriesWithExpense } from 'hooks/api';
-import { CategoryWithExpense } from 'hooks/api/categories/useCategoriesWithExpense';
 
-import { getIconByName } from '../Categories/components/CategoryItem';
+import { OverviewItem } from './components/OverviewItem';
 
 export const Overview = () => {
-  const { t } = useTranslation();
+  const t = useTranslationPrefix('signedIn.overview');
 
   const { categoriesWithExpense } = useCategoriesWithExpense();
 
@@ -27,41 +25,15 @@ export const Overview = () => {
 
   return (
     <ContentWrapper>
-      <Text variant="h1">{t('signedIn.overview.title')}</Text>
+      <Text variant="h1">{t('title')}</Text>
       {data.map(item => (
         <OverviewItem item={item} key={item.id} />
       ))}
       {!showAll && (
         <Button variant="ghost" endIcon={<ArrowDownIcon />} onPress={() => setShowAll(true)}>
-          {t('signedIn.overview.showMore')}
+          {t('showMore')}
         </Button>
       )}
     </ContentWrapper>
-  );
-};
-
-const OverviewItem = ({ item }: { item: CategoryWithExpense }) => {
-  return (
-    <>
-      <HStack space="4" alignItems="center" justifyContent="space-between" my="1">
-        <HStack space="4" alignItems="center">
-          <Circle size="12" bg={item.color} mt="2">
-            {getIconByName(item?.iconName)}
-          </Circle>
-          <VStack>
-            <Text variant="body" color={item?.color} noOfLines={1}>
-              {item?.categoryName}
-            </Text>
-          </VStack>
-        </HStack>
-        <VStack alignItems="flex-end">
-          <Text variant="body" noOfLines={1}>
-            {item.totalExpense} {Constants.CURRENCY}
-          </Text>
-          <Text>{item.totalExpensePercentage}%</Text>
-        </VStack>
-      </HStack>
-      <Divider bg="gray.200" mt="2" />
-    </>
   );
 };
