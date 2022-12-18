@@ -6,11 +6,19 @@ import { useGetExpenses } from '../expenses';
 
 import { useGetCategories } from './useGetCategories';
 
-export type CategoryWithExpense = Category & { totalExpense: number };
+export type CategoryWithExpense = Category & {
+  totalExpense: number;
+  totalExpensePercentage: number;
+};
 
 export const useCategoriesWithExpense = () => {
   const { data: categories } = useGetCategories();
   const { data: expenses } = useGetExpenses();
+
+  const totalExpenses = useMemo(
+    () => expenses?.reduce((acc, expense) => acc + expense.value, 0) ?? 0,
+    [expenses],
+  );
 
   const categoriesWithExpense = useMemo(() => {
     if (!categories) return [] as CategoryWithExpense[];
@@ -26,14 +34,10 @@ export const useCategoriesWithExpense = () => {
       return {
         ...category,
         totalExpense,
+        totalExpensePercentage: parseFloat(((totalExpense / totalExpenses) * 100).toFixed(2)),
       };
     });
-  }, [categories, expenses]);
-
-  const totalExpenses = useMemo(
-    () => expenses?.reduce((acc, expense) => acc + expense.value, 0) ?? 0,
-    [expenses],
-  );
+  }, [categories, expenses, totalExpenses]);
 
   return {
     categoriesWithExpense,

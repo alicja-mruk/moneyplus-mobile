@@ -48,16 +48,16 @@ export const Transactions = () => {
               justifyContent="space-between"
               bg={isPressed ? 'secondary.400:alpha.20' : 'transparent'}>
               <HStack space="4" alignItems="center">
-                <Circle size="12" bg={item.category.color} mt="2">
-                  {getIconByName(item.category.iconName)}
+                <Circle size="12" bg={item?.category?.color} mt="2">
+                  {getIconByName(item?.category?.iconName)}
                 </Circle>
 
                 <VStack>
-                  <Text variant="body" color={item.category.color} noOfLines={1}>
-                    {item.category.categoryName}
+                  <Text variant="body" color={item?.category?.color} noOfLines={1}>
+                    {item?.category?.categoryName}
                   </Text>
-                  <Text variant="body" color={item.category.color} noOfLines={1}>
-                    {item.name}
+                  <Text variant="body" color={item?.category?.color} noOfLines={1}>
+                    {item?.name}
                   </Text>
                 </VStack>
               </HStack>
