@@ -43,9 +43,6 @@ export const Categories = () => {
     return noExpensesChartData;
   }, [categoriesWithExpense]);
 
-  // TODO: remove mocks
-  const income = '14 000 zł';
-
   const onAddExpense = (category: Category) => {
     bottomSheet.open(category);
   };
@@ -73,9 +70,6 @@ export const Categories = () => {
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
                 {expenseValue}
-              </Text>
-              <Text color="green.500" variant="body">
-                {income}
               </Text>
             </VStack>
           }
