@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 import 'intl-pluralrules';
-import { initReactI18next } from 'react-i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
 
 import translationEN from 'assets/locale/en.json';
 
@@ -10,8 +10,23 @@ const resources = {
   },
 };
 
-// TODO: implement system language detection - probably not for MVP
-i18n.use(initReactI18next).init({
-  resources,
-  fallbackLng: 'en',
-});
+i18n
+  .use(initReactI18next)
+  .init({
+    resources,
+    lng: 'en',
+    fallbackLng: 'en',
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+  .catch(err => {
+    console.warn('Failed to initialize i18next', err);
+  });
+
+export const useTranslationPrefix = (prefix: string) => {
+  const { t } = useTranslation();
+  return (key: string) => t(`${prefix}.${key}`);
+};
+
+export default i18n;
