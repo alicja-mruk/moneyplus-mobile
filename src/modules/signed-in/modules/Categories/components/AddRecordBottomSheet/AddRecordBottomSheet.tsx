@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { BottomSheetWrapper } from 'components';
 import { Category } from 'models';
 
+import { useAddRecord } from '../../hooks/useAddRecord';
 import { Keyboard } from '../Keyboard';
 
 import { ActionButtonsPanel } from './ActionButtonsPanel';
@@ -14,7 +15,6 @@ import { DateFooter } from './Footer';
 import { Header } from './Header';
 import { NotesModal, NotesModalHandle } from './NotesModal';
 import { PickDateModal, PickDateModalHandle } from './PickDateModal';
-import { useAddRecord } from './useAddRecord';
 
 type Props = {
   category: Category;
