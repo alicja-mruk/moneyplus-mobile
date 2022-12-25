@@ -1,4 +1,4 @@
-import { Expense } from 'models';
+import { Expense } from 'models/Expense';
 
 // TODO: fix types
 export const groupByDate = (expenses: Expense[]) => {

@@ -4,14 +4,12 @@ import { useWindowDimensions } from 'react-native';
 import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
-import { ContentWrapper } from 'components';
+import { ContentWrapper } from 'components/ContentWrapper';
 import { Constants } from 'config/constants';
-import { colorPalette } from 'config/theme/foundations';
-import { useBottomSheetCustom } from 'hooks';
-import { useCategoriesWithExpense } from 'hooks/api';
-import { Category } from 'models/Category';
+import { colorPalette } from 'config/theme/foundations/colorPalette';
+import { useCategoriesWithExpense } from 'hooks/api/categories/useCategoriesWithExpense';
 
-import { AddRecordBottomSheet, CategoryItem } from './components';
+import { CategoryItem } from './components/CategoryItem';
 
 // if every value is 0 it causes crash
 const noExpensesChartData = [
@@ -23,7 +21,6 @@ const CONTAINER_HEIGHT = 130;
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
-  const bottomSheet = useBottomSheetCustom<Category>();
 
   const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
 
@@ -42,10 +39,6 @@ export const Categories = () => {
 
     return noExpensesChartData;
   }, [categoriesWithExpense]);
-
-  const onAddExpense = (category: Category) => {
-    bottomSheet.open(category);
-  };
 
   const expenseValue = useMemo(() => {
     const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
@@ -78,18 +71,12 @@ export const Categories = () => {
           <CategoryItem
             key={index}
             {...item}
-            onPress={() => onAddExpense(item)}
+            onPress={() => {}}
             position="absolute"
             {...getAbsoluteProps(index, width, height)}
           />
         ))}
       </Center>
-
-      <AddRecordBottomSheet
-        category={bottomSheet.data as Category}
-        ref={bottomSheet.ref}
-        onAddExpenseCallback={bottomSheet.close}
-      />
     </ContentWrapper>
   );
 };

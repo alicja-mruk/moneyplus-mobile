@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react';
 
+
 import { ArrowDownIcon, Button, Text } from 'native-base';
 
-import { ContentWrapper } from 'components';
+import { ContentWrapper } from 'components/ContentWrapper';
 import { useTranslationPrefix } from 'config/i18n';
-import { useCategoriesWithExpense } from 'hooks/api';
+import { useCategoriesWithExpense } from 'hooks/api/categories/useCategoriesWithExpense';
 
 import { OverviewItem } from './components/OverviewItem';
 
