@@ -7,6 +7,7 @@ export enum Route {
   SignedInTabs = 'SignedInTabs',
   CategoriesStack = 'CategoriesStack',
   Categories = 'Categories',
+  UpdateExpense = 'UpdateExpense',
 
   TransactionsStack = 'TransactionsStack',
   Transactions = 'Transactions',
