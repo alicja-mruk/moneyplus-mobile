@@ -3,7 +3,11 @@ import { Platform } from 'react-native';
 
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
+import { Category } from 'models/Category';
+import { Expense } from 'models/Expense';
 import { Route } from 'navigation/Route';
+
+import { UpdateExpense } from '../UpdateExpense/UpdateExpense';
 
 import { Transactions } from './Transactions';
 
@@ -24,10 +28,16 @@ export const TransactionsStack = () => {
         cardStyleInterpolator,
       }}>
       <Stack.Screen name={Route.Transactions} component={Transactions} />
+      <Stack.Screen
+        name={Route.UpdateExpense}
+        component={UpdateExpense}
+        options={{ presentation: 'modal' }}
+      />
     </Stack.Navigator>
   );
 };
 
 export type TransactionsStackParamList = {
-  Transactions: undefined;
+  [Route.Transactions]: undefined;
+  UpdateExpense: { category: Category; expense?: Expense };
 };

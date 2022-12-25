@@ -64,6 +64,11 @@ export const UpdateExpense = () => {
 
       <CustomForm
         mt="12"
+        initialValue={{
+          expense: `${params?.expense?.value ? params?.expense?.value : ''}`,
+          note: `${params?.expense?.name ? params?.expense?.name : ''}`,
+          date: `${params?.expense?.creationDate ? params?.expense?.creationDate : ''}`,
+        }}
         scrollEnabled={false}
         showLabels={false}
         formConfig={formConfig}

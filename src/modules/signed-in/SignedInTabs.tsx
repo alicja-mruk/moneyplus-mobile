@@ -13,7 +13,7 @@ import { OverviewStack } from './modules/Overview/OverviewStack';
 import { SettingsStack } from './modules/Settings/SettingsStack';
 import { TransactionsStack } from './modules/Transactions/TransactionsStack';
 
-const hiddenTabRoutes: Route[] = [];
+const hiddenTabRoutes: Route[] = [Route.UpdateExpense];
 
 const Tab = createBottomTabNavigator<SignedInTabsParamList>();
 
@@ -90,8 +90,8 @@ const tabs = [
 ];
 
 export type SignedInTabsParamList = {
-  CategoriesStack: undefined;
-  TransactionsStack: undefined;
-  OverviewStack: undefined;
-  SettingsStack: undefined;
+  [Route.CategoriesStack]: undefined;
+  [Route.TransactionsStack]: undefined;
+  [Route.OverviewStack]: undefined;
+  [Route.SettingsStack]: undefined;
 };
