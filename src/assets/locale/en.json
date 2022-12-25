@@ -33,7 +33,6 @@
       }
     }
   },
-
   "signedIn": {
     "tabs": {
       "categories": "Categories",
@@ -79,5 +78,14 @@
         "lastName": "Last Name"
       }
     }
+  },
+  "updateExpense": {
+    "form": {
+      "note": "Note",
+      "expense": "Expense",
+      "date": "Date"
+    },
+    "update": " Update Expense",
+    "create": "Create Expense"
   }
 }

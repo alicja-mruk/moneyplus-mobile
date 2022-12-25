@@ -1,3 +1,6 @@
+import { Category } from 'models/Category';
+import { Expense } from 'models/Expense';
+
 import { Route } from './Route';
 
 declare global {
@@ -15,6 +18,7 @@ declare global {
       [Route.Overview]: undefined;
       [Route.SettingsStack]: undefined;
       [Route.Settings]: undefined;
+      [Route.UpdateExpense]: { category: Category; expense?: Expense };
     }
   }
 }
