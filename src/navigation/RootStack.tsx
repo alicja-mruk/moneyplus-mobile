@@ -38,7 +38,7 @@ export const RootStack = () => {
 };
 
 type RootStackParamList = {
-  SignedOutStack: NavigatorScreenParams<SignedOutStackParamList>;
-  SignedInTabs: NavigatorScreenParams<SignedInTabsParamList>;
-  Splash: undefined;
+  [Route.SignedOutStack]: NavigatorScreenParams<SignedOutStackParamList>;
+  [Route.SignedInTabs]: NavigatorScreenParams<SignedInTabsParamList>;
+  [Route.Splash]: undefined;
 };
