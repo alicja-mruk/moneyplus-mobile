@@ -1,14 +1,15 @@
 import React from 'react';
 
+
 import i18next from 'i18next';
 import { Button, Image, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
 
-import { RegisterVars } from 'api';
-import { ContentWrapper, CustomForm } from 'components';
-import { FormConfig, RenderFooterType } from 'components/CustomForm';
+import { RegisterVars } from 'api/types';
+import { ContentWrapper } from 'components/ContentWrapper';
+import { CustomForm, FormConfig, RenderFooterType } from 'components/CustomForm';
 
-import { useRegister } from '../hooks';
+import { useRegister } from '../hooks/useRegister';
 
 import { loginFormConfig } from './Login';
 

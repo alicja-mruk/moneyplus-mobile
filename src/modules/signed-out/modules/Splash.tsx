@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Spinner, Text, VStack } from 'native-base';
 import * as Keychain from 'react-native-keychain';
 
-import { useAuthContext } from 'contexts';
-import { Route } from 'navigation';
+import { useAuthContext } from 'contexts/AuthContext';
+import { Route } from 'navigation/Route';
+
 
 export const Splash = () => {
   const navigation = useNavigation();

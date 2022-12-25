@@ -1,18 +1,17 @@
-import { RefObject, useCallback, useRef, useState } from 'react';
+import { RefObject, useCallback, useRef } from 'react';
 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import { useFocusEffect } from '@react-navigation/native';
 
-export type BottomSheetCustom<T> = {
+export type BottomSheetCustom = {
   ref: RefObject<BottomSheetModalMethods>;
-  open: (newData?: T) => void;
+  open: () => void;
   close: () => void;
-  data: T | undefined;
 };
-export const useBottomSheetCustom = <T>(): BottomSheetCustom<T> => {
+
+export const useBottomSheet = (): BottomSheetCustom => {
   const ref = useRef<BottomSheetModal>(null);
-  const [data, setData] = useState<T>();
 
   useFocusEffect(
     useCallback(() => {
@@ -21,22 +20,17 @@ export const useBottomSheetCustom = <T>(): BottomSheetCustom<T> => {
     }, []),
   );
 
-  const open = useCallback((newData?: T) => {
-    newData && setData(newData);
+  const open = useCallback(() => {
     ref.current?.present();
   }, []);
 
   const close = useCallback(() => {
     ref.current?.close();
-    if (data) {
-      setData(undefined);
-    }
-  }, [data]);
+  }, []);
 
   return {
     ref,
     open,
     close,
-    data,
   };
 };

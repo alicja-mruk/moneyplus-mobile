@@ -6,7 +6,6 @@ declare global {
       [Route.SignedOutStack]: undefined;
       [Route.Login]: undefined;
       [Route.Register]: undefined;
-
       [Route.SignedInTabs]: undefined;
       [Route.CategoriesStack]: undefined;
       [Route.Categories]: undefined;

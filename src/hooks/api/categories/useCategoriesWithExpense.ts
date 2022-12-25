@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 
-import { Category } from 'models';
+import { Category } from 'models/Category';
 
-import { useGetExpenses } from '../expenses';
+import { useGetExpenses } from '../expenses/useGetExpenses';
 
 import { useGetCategories } from './useGetCategories';
 

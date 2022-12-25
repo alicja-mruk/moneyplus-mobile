@@ -3,8 +3,8 @@ import React, { useMemo } from 'react';
 import { SectionList, Text, VStack } from 'native-base';
 
 import { useTranslationPrefix } from 'config/i18n';
-import { useGetExpenses } from 'hooks/api';
-import { Expense } from 'models';
+import { useGetExpenses } from 'hooks/api/expenses/useGetExpenses';
+import { Expense } from 'models/Expense';
 import { groupByDate } from 'utils/groupByDate';
 
 import { SectionHeader } from './components/SectionHeader';

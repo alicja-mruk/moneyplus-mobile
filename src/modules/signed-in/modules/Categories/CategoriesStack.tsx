@@ -3,7 +3,8 @@ import { Platform } from 'react-native';
 
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { Route } from 'navigation';
+
+import { Route } from 'navigation/Route';
 
 import { Categories } from './Categories';
 

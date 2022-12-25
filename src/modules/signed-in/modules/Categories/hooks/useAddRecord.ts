@@ -2,10 +2,10 @@ import { useState } from 'react';
 
 import { useTranslation } from 'react-i18next';
 
-import { AddExpenseVars } from 'api';
-import { CustomToast } from 'components';
-import { useAddExpense } from 'hooks/api';
-import { Category } from 'models';
+import { AddExpenseVars } from 'api/types';
+import { CustomToast } from 'components/CustomToast';
+import { useAddExpense } from 'hooks/api/expenses/useAddExpense';
+import { Category } from 'models/Category';
 
 const COMMA = ',';
 
@@ -62,11 +62,11 @@ export const useAddRecord = (category: Category, onAddExpenseCallback: () => voi
     try {
       await addExpenseAsync({ payload: expenseVars });
       CustomToast.success(t('signedIn.categories.addExpenseSuccess'));
+      onAddExpenseCallback();
     } catch (e) {
       CustomToast.error();
     } finally {
       onClose();
-      onAddExpenseCallback();
     }
   };
 

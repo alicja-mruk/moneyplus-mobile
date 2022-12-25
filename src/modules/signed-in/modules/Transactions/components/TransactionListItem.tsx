@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { Box, Circle, Divider, HStack, Pressable, Text, VStack } from 'native-base';
+import { Box, Circle, Divider, HStack, Text, VStack } from 'native-base';
 
 import { Constants } from 'config/constants';
-import { Expense } from 'models';
+import { Expense } from 'models/Expense';
 import { getIconByName } from 'utils/getIconByName';
 
 type Props = {
