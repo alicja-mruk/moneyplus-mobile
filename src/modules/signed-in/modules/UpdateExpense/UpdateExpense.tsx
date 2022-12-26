@@ -14,17 +14,24 @@ import { UpdateExpenseVars, useUpdateExpenseUseCase } from './hooks/useUpdateExp
 export const UpdateExpense = () => {
   const { params } = useRoute<UpdateExpenseParamProp>();
 
-  const { updateExpense, initValue, formConfig, title, loading } = useUpdateExpenseUseCase(
-    params.expense,
-  );
+  const { updateExpense, deleteExpense, initValue, formConfig, title, loading } =
+    useUpdateExpenseUseCase(params.expense);
 
   const onSubmitPress = async (form: UpdateExpenseVars) => {
     await updateExpense({ form, category: params.category, expense: params?.expense });
   };
 
+  const onDeleteExpensePress = async () => {
+    await deleteExpense({ id: params.expense?.id as string });
+  };
+
   return (
     <VStack px="4" flex="1" safeArea bg="white">
-      <UpdateExpenseHeader title={title} />
+      <UpdateExpenseHeader
+        title={title}
+        showRemoveButton={!!params.expense}
+        onDeleteExpensePress={onDeleteExpensePress}
+      />
       <CategoryIcon category={params.category} />
       <CustomForm
         mt="6"
