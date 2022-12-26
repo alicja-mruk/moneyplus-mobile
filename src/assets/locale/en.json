@@ -87,6 +87,7 @@
     },
     "createExpenseSuccess": "Created an expense",
     "editExpenseSuccess": "Expense has been edited",
+    "deleteExpenseSuccess": "Expense has been removed",
     "update": " Update Expense",
     "create": "Create Expense"
   }

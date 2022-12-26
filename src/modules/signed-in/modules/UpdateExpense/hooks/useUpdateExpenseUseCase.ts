@@ -4,11 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import i18next from 'i18next';
 
-import { AddExpenseVars, EditExpenseVars } from 'api/types';
+import { AddExpenseVars, DeleteExpenseVars, EditExpenseVars } from 'api/types';
 import { FormConfig } from 'components/CustomForm';
 import { CustomToast } from 'components/CustomToast';
 import { useTranslationPrefix } from 'config/i18n';
 import { useAddExpense } from 'hooks/api/expenses/useAddExpense';
+import { useDeleteExpense } from 'hooks/api/expenses/useDeleteExpense';
 import { useEditExpense } from 'hooks/api/expenses/useEditExpense';
 import { Category } from 'models/Category';
 import { Expense } from 'models/Expense';
@@ -56,6 +57,7 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
 
   const { mutateAsync: addExpenseAsync, isLoading: addExpenseLoading } = useAddExpense();
   const { mutateAsync: editExpenseAsync, isLoading: editExpenseLoading } = useEditExpense();
+  const { mutateAsync: deleteExpenseAsync, isLoading: deleteExpenseLoading } = useDeleteExpense();
 
   const addExpense = async (payload: AddExpenseVars) => {
     try {
@@ -71,6 +73,16 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
     try {
       await editExpenseAsync({ payload });
       CustomToast.success(t('editExpenseSuccess'));
+      goBack();
+    } catch (e) {
+      CustomToast.error();
+    }
+  };
+
+  const deleteExpense = async (payload: DeleteExpenseVars) => {
+    try {
+      await deleteExpenseAsync({ payload });
+      CustomToast.success(t('deleteExpenseSuccess'));
       goBack();
     } catch (e) {
       CustomToast.error();
@@ -100,11 +112,12 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
   };
 
   return {
+    deleteExpense,
     updateExpense,
     initValue,
     formConfig,
     title,
-    loading: addExpenseLoading || editExpenseLoading,
+    loading: addExpenseLoading || editExpenseLoading || deleteExpenseLoading,
   };
 };
 
