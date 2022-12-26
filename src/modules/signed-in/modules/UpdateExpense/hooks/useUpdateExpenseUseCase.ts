@@ -12,13 +12,9 @@ import { useEditExpense } from 'hooks/api/expenses/useEditExpense';
 import { Category } from 'models/Category';
 import { Expense } from 'models/Expense';
 
-export type UpdateExpenseForm = {
-  form: UpdateExpenseVars;
-};
-
 export type UpdateExpenseVars = {
   date: number;
-  expense: number;
+  expense: string;
   note: string;
 };
 
@@ -56,8 +52,8 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
 
   const title = useMemo(() => (expense ? t('update') : t('create')), [expense, t]);
 
-  const { mutateAsync: addExpenseAsync } = useAddExpense();
-  const { mutateAsync: editExpenseAsync } = useEditExpense();
+  const { mutateAsync: addExpenseAsync, isLoading: addExpenseLoading } = useAddExpense();
+  const { mutateAsync: editExpenseAsync, isLoading: editExpenseLoading } = useEditExpense();
 
   const addExpense = async (payload: AddExpenseVars) => {
     try {
@@ -84,26 +80,25 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
     category: Category;
     expense?: Expense;
   }) => {
-    const date = dayjs(form.date).format('DD-MM-YYYY');
+    const date = dayjs(form?.date ? form.date : new Date()).format('DD-MM-YYYY');
 
     const vars: EditExpenseVars | AddExpenseVars = {
       ...(expense && { id: expense?.id }),
       categoryId: category.id,
       name: form.note,
-      value: form.expense,
+      value: Number(form.expense),
       creationDate: date,
     };
 
-    console.log({ vars });
-    console.log({ isEditing: isEditing(vars) });
-    // isEditing(vars) ? await editExpense(vars) : await addExpense(vars);
-  };;
+    isEditing(vars) ? await editExpense(vars) : await addExpense(vars);
+  };
 
   return {
     updateExpense,
     initValue,
     formConfig,
     title,
+    loading: addExpenseLoading || editExpenseLoading,
   };
 };
 

@@ -9,15 +9,17 @@ import { UpdateExpenseParamProp } from '../Categories/CategoriesStack';
 
 import { CategoryIcon } from './components/CategoryItem';
 import { UpdateExpenseHeader } from './components/UpdateExpenseHeader';
-import { UpdateExpenseForm, useUpdateExpenseUseCase } from './hooks/useUpdateExpenseUseCase';
+import { UpdateExpenseVars, useUpdateExpenseUseCase } from './hooks/useUpdateExpenseUseCase';
 
 export const UpdateExpense = () => {
   const { params } = useRoute<UpdateExpenseParamProp>();
 
-  const { updateExpense, initValue, formConfig, title } = useUpdateExpenseUseCase(params.expense);
+  const { updateExpense, initValue, formConfig, title, loading } = useUpdateExpenseUseCase(
+    params.expense,
+  );
 
-  const onSubmitPress = async (data: UpdateExpenseForm) => {
-    await updateExpense({ form: data.form, category: params.category, expense: params?.expense });
+  const onSubmitPress = async (form: UpdateExpenseVars) => {
+    await updateExpense({ form, category: params.category, expense: params?.expense });
   };
 
   return (
@@ -31,8 +33,9 @@ export const UpdateExpense = () => {
         formConfig={formConfig}
         renderFooter={(form: RenderFooterType) => (
           <Button
-            onPress={() => onSubmitPress(form.getValues() as UpdateExpenseForm)}
-            isDisabled={!form.isValid}>
+            onPress={() => onSubmitPress(form.getValues() as UpdateExpenseVars)}
+            isDisabled={!form.isValid}
+            isLoading={loading}>
             {title}
           </Button>
         )}
