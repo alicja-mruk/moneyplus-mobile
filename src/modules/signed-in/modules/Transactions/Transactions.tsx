@@ -18,14 +18,12 @@ export const Transactions = () => {
   const { navigate } = useNavigation();
   const sectionData = useMemo(() => groupByDate(data ?? []), [data]);
 
-  const renderItem = ({ item }: { item: Expense }) => {
-    return (
-      <Pressable
-        onPress={() => navigate(Route.UpdateExpense, { category: item.category, expense: item })}>
-        <TransactionListItem item={item} />
-      </Pressable>
-    );
-  };
+  const renderItem = ({ item }: { item: Expense }) => (
+    <Pressable
+      onPress={() => navigate(Route.UpdateExpense, { category: item.category, expense: item })}>
+      <TransactionListItem item={item} />
+    </Pressable>
+  );
 
   const renderSectionHeader = ({ section: { date } }: { section: { date: string } }) => {
     const sectionExpenses = sectionData.find(item => item.date === date)?.data;

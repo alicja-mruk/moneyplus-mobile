@@ -85,6 +85,8 @@
       "expense": "Expense",
       "date": "Date"
     },
+    "createExpenseSuccess": "Created an expense",
+    "editExpenseSuccess": "Expense has been edited",
     "update": " Update Expense",
     "create": "Create Expense"
   }
