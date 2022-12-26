@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import { useNavigation } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import i18next from 'i18next';
 
@@ -41,6 +42,7 @@ export const formConfig: FormConfig[] = [
 
 export const useUpdateExpenseUseCase = (expense?: Expense) => {
   const t = useTranslationPrefix('updateExpense');
+  const { goBack } = useNavigation();
 
   const initValue = useMemo(() => {
     return {
@@ -58,6 +60,8 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
   const addExpense = async (payload: AddExpenseVars) => {
     try {
       await addExpenseAsync({ payload });
+      CustomToast.success(t('createExpenseSuccess'));
+      goBack();
     } catch (e) {
       CustomToast.error();
     }
@@ -66,6 +70,8 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
   const editExpense = async (payload: EditExpenseVars) => {
     try {
       await editExpenseAsync({ payload });
+      CustomToast.success(t('editExpenseSuccess'));
+      goBack();
     } catch (e) {
       CustomToast.error();
     }
@@ -80,7 +86,7 @@ export const useUpdateExpenseUseCase = (expense?: Expense) => {
     category: Category;
     expense?: Expense;
   }) => {
-    const date = dayjs(form?.date ? form.date : new Date()).format('DD-MM-YYYY');
+    const date = dayjs(form?.date ? form.date : new Date()).format('YYYY-MM-DD');
 
     const vars: EditExpenseVars | AddExpenseVars = {
       ...(expense && { id: expense?.id }),
