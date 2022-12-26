@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { DeleteExpenseVars, EditExpenseData, Endpoints } from 'api';
+import { Endpoints } from 'api/endpoints';
 import { CacheKey, queryClient } from 'api/queryClient';
-import { useAxiosContext } from 'contexts';
+import { DeleteExpenseVars, EditExpenseData } from 'api/types';
+import { useAxiosContext } from 'contexts/AxiosContext';
 
 export const useDeleteExpense = () => {
   const { deleteExpense } = useDeleteExpenseApi();

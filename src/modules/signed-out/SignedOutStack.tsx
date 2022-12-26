@@ -2,9 +2,10 @@ import React from 'react';
 
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { Route } from 'navigation';
+import { Route } from 'navigation/Route';
 
-import { Login, Register } from './modules';
+import { Login } from './modules/Login';
+import { Register } from './modules/Register';
 
 const Stack = createStackNavigator<SignedOutStackParamList>();
 

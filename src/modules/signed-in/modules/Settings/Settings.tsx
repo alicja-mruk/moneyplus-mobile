@@ -2,10 +2,10 @@ import React from 'react';
 
 import { Box, Button, Spinner, Text, VStack } from 'native-base';
 
-import { ContentWrapper } from 'components';
+import { ContentWrapper } from 'components/ContentWrapper';
 import { useTranslationPrefix } from 'config/i18n';
-import { useAuthContext } from 'contexts';
-import { useGetProfile } from 'hooks/api';
+import { useAuthContext } from 'contexts/AuthContext';
+import { useGetProfile } from 'hooks/api/user/useGetProfile';
 
 import { UserInfo } from './UserInfo';
 
@@ -22,7 +22,7 @@ export const Settings = () => {
   return (
     <ContentWrapper justifyContent="space-between">
       <Box>
-        <Text variant="h1">{t('signedIn.settings.title')}</Text>
+        <Text variant="h1">{t('title')}</Text>
         <Box mt="12">
           {isLoading || !data ? (
             <Spinner />

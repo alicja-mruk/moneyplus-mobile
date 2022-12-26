@@ -1,9 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
-import { Endpoints, LoginData, LoginVars } from 'api';
-import { useAuthContext, useAxiosContext } from 'contexts';
-import { Route } from 'navigation';
+import { Endpoints } from 'api/endpoints';
+import { LoginData, LoginVars } from 'api/types';
+import { useAuthContext } from 'contexts/AuthContext';
+import { useAxiosContext } from 'contexts/AxiosContext';
+import { Route } from 'navigation/Route';
+
 
 export const useLogin = () => {
   const { setAuthState, saveTokensToKeychain } = useAuthContext();

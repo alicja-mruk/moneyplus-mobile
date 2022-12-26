@@ -1,3 +1,6 @@
+import { Category } from 'models/Category';
+import { Expense } from 'models/Expense';
+
 import { Route } from './Route';
 
 declare global {
@@ -6,7 +9,6 @@ declare global {
       [Route.SignedOutStack]: undefined;
       [Route.Login]: undefined;
       [Route.Register]: undefined;
-
       [Route.SignedInTabs]: undefined;
       [Route.CategoriesStack]: undefined;
       [Route.Categories]: undefined;
@@ -16,6 +18,7 @@ declare global {
       [Route.Overview]: undefined;
       [Route.SettingsStack]: undefined;
       [Route.Settings]: undefined;
+      [Route.UpdateExpense]: { category: Category; expense?: Expense };
     }
   }
 }

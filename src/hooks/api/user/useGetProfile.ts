@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { Endpoints } from 'api';
+import { Endpoints } from 'api/endpoints';
 import { CacheKey } from 'api/queryClient';
-import { useAxiosContext } from 'contexts';
-import { User } from 'models';
+import { useAxiosContext } from 'contexts/AxiosContext';
+import { User } from 'models/User';
 
 export const useGetProfile = () => {
   const { getProfile } = useGetProfileApi();

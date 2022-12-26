@@ -4,23 +4,28 @@ import { Entypo, MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icon
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import i18next from 'i18next';
+import { useTheme } from 'native-base';
 
-import { colorPalette } from 'config/theme/foundations';
-import { Route } from 'navigation';
+import { Route } from 'navigation/Route';
 
-import { CategoriesStack, OverviewStack, SettingsStack, TransactionsStack } from './modules';
+import { CategoriesStack } from './modules/Categories/CategoriesStack';
+import { OverviewStack } from './modules/Overview/OverviewStack';
+import { SettingsStack } from './modules/Settings/SettingsStack';
+import { TransactionsStack } from './modules/Transactions/TransactionsStack';
 
-const hiddenTabRoutes: Route[] = [];
+const hiddenTabRoutes: Route[] = [Route.UpdateExpense];
 
 const Tab = createBottomTabNavigator<SignedInTabsParamList>();
 
 export const SignedInTabs = () => {
+  const { colors } = useTheme();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
         style: {
-          backgroundColor: colorPalette.white,
+          backgroundColor: colors.white,
         },
         tabBarStyle: {
           height: 64,
@@ -30,8 +35,8 @@ export const SignedInTabs = () => {
             ? 'none'
             : 'flex',
         },
-        tabBarActiveTintColor: colorPalette.primary[200],
-        tabBarInactiveTintColor: colorPalette.primary[100],
+        tabBarActiveTintColor: colors.primary[200],
+        tabBarInactiveTintColor: colors.primary[100],
         tabBarIcon: ({ color }) => {
           switch (route.name) {
             case Route.CategoriesStack:
@@ -85,8 +90,8 @@ const tabs = [
 ];
 
 export type SignedInTabsParamList = {
-  CategoriesStack: undefined;
-  TransactionsStack: undefined;
-  OverviewStack: undefined;
-  SettingsStack: undefined;
+  [Route.CategoriesStack]: undefined;
+  [Route.TransactionsStack]: undefined;
+  [Route.OverviewStack]: undefined;
+  [Route.SettingsStack]: undefined;
 };

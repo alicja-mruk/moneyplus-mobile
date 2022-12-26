@@ -1,1 +1,0 @@
-export { useGetReceipts } from './useGetReceipts';

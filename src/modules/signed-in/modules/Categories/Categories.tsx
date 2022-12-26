@@ -1,17 +1,18 @@
 import React, { useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
-import { ContentWrapper } from 'components';
+import { ContentWrapper } from 'components/ContentWrapper';
 import { Constants } from 'config/constants';
-import { colorPalette } from 'config/theme/foundations';
-import { useBottomSheetCustom } from 'hooks';
-import { useCategoriesWithExpense } from 'hooks/api';
-import { Category } from 'models/Category';
+import { colorPalette } from 'config/theme/foundations/colorPalette';
+import { useCategoriesWithExpense } from 'hooks/api/categories/useCategoriesWithExpense';
+import { Route } from 'navigation/Route';
 
-import { AddRecordBottomSheet, CategoryItem } from './components';
+import { CategoryItem } from './components/CategoryItem';
+import { getAbsoluteProps } from './utils';
 
 // if every value is 0 it causes crash
 const noExpensesChartData = [
@@ -23,9 +24,10 @@ const CONTAINER_HEIGHT = 130;
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
-  const bottomSheet = useBottomSheetCustom<Category>();
 
   const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
+
+  const { navigate } = useNavigation();
 
   const chartData = useMemo(() => {
     if (categoriesWithExpense.length > 0) {
@@ -42,10 +44,6 @@ export const Categories = () => {
 
     return noExpensesChartData;
   }, [categoriesWithExpense]);
-
-  const onAddExpense = (category: Category) => {
-    bottomSheet.open(category);
-  };
 
   const expenseValue = useMemo(() => {
     const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
@@ -78,50 +76,12 @@ export const Categories = () => {
           <CategoryItem
             key={index}
             {...item}
-            onPress={() => onAddExpense(item)}
+            onPress={() => navigate(Route.UpdateExpense, { category: item })}
             position="absolute"
             {...getAbsoluteProps(index, width, height)}
           />
         ))}
       </Center>
-
-      <AddRecordBottomSheet
-        category={bottomSheet.data as Category}
-        ref={bottomSheet.ref}
-        onAddExpenseCallback={bottomSheet.close}
-      />
     </ContentWrapper>
   );
-};
-
-const getAbsoluteProps = (index: number, width: number, height: number) => {
-  const itemsInRow = 4;
-  const heightSpace = height / itemsInRow - 24;
-  const widthSpace = width / itemsInRow;
-
-  if (index < itemsInRow) {
-    return {
-      top: 0,
-      left: index * widthSpace,
-    };
-  }
-
-  if (index >= itemsInRow && index < 2 * itemsInRow) {
-    return {
-      top: index < itemsInRow + itemsInRow / 2 ? heightSpace : 2 * heightSpace,
-      left: index % 2 === 0 ? 0 : 3 * widthSpace,
-    };
-  }
-
-  return {
-    top: 3 * heightSpace,
-    left:
-      index % 3 === 0
-        ? widthSpace
-        : index === 2 * itemsInRow
-        ? 0
-        : index % 2 === 0
-        ? 2 * widthSpace
-        : 3 * widthSpace,
-  };
 };

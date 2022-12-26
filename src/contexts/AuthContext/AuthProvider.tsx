@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import * as Keychain from 'react-native-keychain';
 
-import { Route } from 'navigation';
+
+import { Route } from 'navigation/Route';
 
 import { AuthContext } from './AuthContext';
 
