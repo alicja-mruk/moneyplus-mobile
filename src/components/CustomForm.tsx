@@ -79,7 +79,7 @@ export const CustomForm = ({
     <>
       <ScrollView scrollEnabled={scrollEnabled} {...rest}>
         {formConfig.map(item => (
-          <Box h="16" key={item.key}>
+          <Box key={item.key}>
             <FormControl key={item.key} isInvalid={item.key in errors}>
               <Controller
                 name={item.key}
@@ -91,9 +91,14 @@ export const CustomForm = ({
                 }}
                 control={control}
                 render={({ field }) => (
-                  <>
-                    {showLabels ||
-                      (item.showLabel && <FormControl.Label>{item.name}</FormControl.Label>)}
+                  <VStack space="2">
+                    {showLabels && (
+                      <Box h="6">
+                        <FormControl.Label position="absolute" top="2">
+                          {item.name}
+                        </FormControl.Label>
+                      </Box>
+                    )}
                     {
                       {
                         text: (
@@ -127,7 +132,7 @@ export const CustomForm = ({
                         ),
                       }[item.type]
                     }
-                  </>
+                  </VStack>
                 )}
               />
               <FormControl.ErrorMessage position="absolute" bottom="-20">
