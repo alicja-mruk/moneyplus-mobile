@@ -1,42 +1,26 @@
 import React from 'react';
 
-import { Box, Button, Spinner, Text, VStack } from 'native-base';
+import { Button, Text } from 'native-base';
 
 import { ContentWrapper } from 'components/ContentWrapper';
 import { useTranslationPrefix } from 'config/i18n';
-import { useAuthContext } from 'contexts/AuthContext';
-import { useGetProfile } from 'hooks/api/user/useGetProfile';
 
-import { UserInfo } from './UserInfo';
+import { UserInfoList } from './components/UserInfoList';
+import { useSettingsUseCase } from './hooks/useSettingsUseCase';
 
 export const Settings = () => {
   const t = useTranslationPrefix('signedIn.settings');
-  const { logout } = useAuthContext();
 
-  const { data, isLoading } = useGetProfile();
+  const { userInfoData, data, isLoading, logout } = useSettingsUseCase();
 
   const onLogoutPress = async () => {
     await logout();
   };
 
   return (
-    <ContentWrapper justifyContent="space-between">
-      <Box>
-        <Text variant="h1">{t('title')}</Text>
-        <Box mt="12">
-          {isLoading || !data ? (
-            <Spinner />
-          ) : (
-            <VStack space="2">
-              <UserInfo label={t('user.email')} value={data.email} />
-              <UserInfo label={t('user.firstName')} value={data.firstName} />
-              <UserInfo label={t('user.lastName')} value={data.lastName} />
-              <UserInfo label={t('user.age')} value={data.age.toString()} />
-            </VStack>
-          )}
-        </Box>
-      </Box>
-
+    <ContentWrapper>
+      <Text variant="h1">{t('title')}</Text>
+      <UserInfoList isLoading={isLoading} data={data} userInfoData={userInfoData} />
       <Button onPress={onLogoutPress}>{t('logout')}</Button>
     </ContentWrapper>
   );
