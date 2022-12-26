@@ -1,11 +1,13 @@
 import React from 'react';
 
+
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 
-import { Endpoints, LoginData, RefreshTokenVars } from 'api';
+import { Endpoints } from 'api/endpoints';
+import { LoginData, RefreshTokenVars } from 'api/types';
 import { Constants } from 'config/constants';
-import { useAuthContext } from 'contexts';
+import { useAuthContext } from 'contexts/AuthContext';
 
 import { AxiosContext } from './AxiosContext';
 

@@ -1,1 +1,0 @@
-export { CategoriesStack } from './CategoriesStack';

@@ -1,8 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { AddExpenseVars, EditExpenseData, Endpoints, queryClient } from 'api';
-import { CacheKey } from 'api/queryClient';
-import { useAxiosContext } from 'contexts';
+import { Endpoints } from 'api/endpoints';
+import { CacheKey, queryClient } from 'api/queryClient';
+import { AddExpenseVars, EditExpenseData } from 'api/types';
+import { useAxiosContext } from 'contexts/AxiosContext';
 
 export const useAddExpense = () => {
   const { addExpense } = useAddExpenseApi();

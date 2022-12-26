@@ -1,14 +1,12 @@
 import { useCallback, useState } from 'react';
 
-export const useModal = <T>() => {
+export const useModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  const [data, setData] = useState<T>();
 
   const closeModal = useCallback(() => setModalOpen(false), []);
-  const openModal = useCallback((data?: T) => {
-    data && setData(data);
+  const openModal = useCallback(() => {
     setModalOpen(true);
   }, []);
 
-  return { modalOpen, data, closeModal, openModal };
+  return { modalOpen, closeModal, openModal };
 };

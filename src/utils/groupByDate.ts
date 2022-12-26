@@ -1,8 +1,7 @@
-import { Expense } from 'models';
+import { Expense } from 'models/Expense';
 
-// TODO: fix types
 export const groupByDate = (expenses: Expense[]) => {
-  const groups = expenses.reduce((result, expense) => {
+  const groups = expenses.reduce<Record<string, Expense[]>>((result, expense) => {
     const date = expense.creationDate.split('T')[0];
     if (!result[date]) {
       result[date] = [];
@@ -11,10 +10,12 @@ export const groupByDate = (expenses: Expense[]) => {
     return result;
   }, {});
 
-  return Object.keys(groups).map(date => {
+  const result = Object.keys(groups).map(date => {
     return {
       date,
       data: groups[date] as Expense[],
     };
   });
+
+  return result.sort((a, b) => b.date.localeCompare(a.date));
 };

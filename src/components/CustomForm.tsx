@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Box, FormControl, ScrollView } from 'native-base';
+import { Box, FormControl, ScrollView, VStack } from 'native-base';
+import { InterfaceScrollViewProps } from 'native-base/lib/typescript/components/basic/ScrollView/types';
 import {
   Control,
   Controller,
@@ -12,8 +13,9 @@ import {
 import { useTranslation } from 'react-i18next';
 
 import { BaseInput } from './BaseInput';
+import { DateInput } from './DateInput';
 
-export type TextInputTypes = 'text' | 'number';
+export type TextInputTypes = 'text' | 'number' | 'date';
 
 type BaseValueInput = {
   key: string;
@@ -51,7 +53,7 @@ type Props = {
   showLabels?: boolean;
   verticalSpaceFooter?: string;
   scrollEnabled?: boolean;
-};
+} & InterfaceScrollViewProps;
 
 export const CustomForm = ({
   formConfig,
@@ -61,21 +63,23 @@ export const CustomForm = ({
   showLabels = true,
   verticalSpaceFooter = '12',
   scrollEnabled = true,
+  ...rest
 }: Props) => {
   const { t } = useTranslation();
 
   const {
     reset,
     control,
+    setValue,
     getValues,
     formState: { errors, isValid, isDirty },
   } = useForm<Record<string, any>>({ mode: 'onChange', defaultValues: initialValue || {} });
 
   return (
     <>
-      <ScrollView scrollEnabled={scrollEnabled}>
+      <ScrollView scrollEnabled={scrollEnabled} {...rest}>
         {formConfig.map(item => (
-          <Box h="16" key={item.key}>
+          <Box key={item.key}>
             <FormControl key={item.key} isInvalid={item.key in errors}>
               <Controller
                 name={item.key}
@@ -87,8 +91,14 @@ export const CustomForm = ({
                 }}
                 control={control}
                 render={({ field }) => (
-                  <>
-                    {showLabels && <FormControl.Label>{item.name}</FormControl.Label>}
+                  <VStack space="2">
+                    {showLabels && (
+                      <Box h="6">
+                        <FormControl.Label position="absolute" top="2">
+                          {item.name}
+                        </FormControl.Label>
+                      </Box>
+                    )}
                     {
                       {
                         text: (
@@ -112,9 +122,17 @@ export const CustomForm = ({
                             placeholder={item.name}
                           />
                         ),
+                        date: (
+                          <DateInput
+                            field={field}
+                            onChange={date => {
+                              setValue(item.key, date);
+                            }}
+                          />
+                        ),
                       }[item.type]
                     }
-                  </>
+                  </VStack>
                 )}
               />
               <FormControl.ErrorMessage position="absolute" bottom="-20">
@@ -123,10 +141,8 @@ export const CustomForm = ({
             </FormControl>
           </Box>
         ))}
-
         {children}
       </ScrollView>
-
       <Box bg="white" py={verticalSpaceFooter}>
         {renderFooter({ isValid, reset, getValues, isDirty, control })}
       </Box>
