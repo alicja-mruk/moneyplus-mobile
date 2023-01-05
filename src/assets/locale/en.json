@@ -7,7 +7,8 @@
   "global": {
     "cancel": "Cancel",
     "error": "Something went wrong",
-    "success": "Success"
+    "success": "Success",
+    "init": "Please wait..."
   },
   "signedOut": {
     "email": "Email",
