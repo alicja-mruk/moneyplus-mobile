@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
@@ -6,49 +6,19 @@ import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
 import { ContentWrapper } from 'components/ContentWrapper';
-import { Constants } from 'config/constants';
-import { colorPalette } from 'config/theme/foundations/colorPalette';
-import { useCategoriesWithExpense } from 'hooks/api/categories/useCategoriesWithExpense';
 import { Route } from 'navigation/Route';
 
 import { CategoryItem } from './components/CategoryItem';
+import { useCategoriesUseCase } from './hooks/useCategoriesUseCase';
 import { getAbsoluteProps } from './utils';
-
-// if every value is 0 it causes crash
-const noExpensesChartData = [
-  { value: 250, color: colorPalette.gray[200], name: '' },
-  { value: 250, color: colorPalette.gray[200], name: '' },
-];
 
 const CONTAINER_HEIGHT = 130;
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
-
-  const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
-
   const { navigate } = useNavigation();
 
-  const chartData = useMemo(() => {
-    if (categoriesWithExpense.length > 0) {
-      if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
-        return categoriesWithExpense.map(category => {
-          return {
-            value: category.totalExpense,
-            color: category.color,
-            name: category.categoryName,
-          };
-        });
-      }
-    }
-
-    return noExpensesChartData;
-  }, [categoriesWithExpense]);
-
-  const expenseValue = useMemo(() => {
-    const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
-    return `${trimmedZeros} ${Constants.CURRENCY}`;
-  }, [totalExpenses]);
+  const { chartData, expenseValue, categoriesWithExpense } = useCategoriesUseCase();
 
   return (
     <ContentWrapper>

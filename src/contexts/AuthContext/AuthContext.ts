@@ -11,8 +11,8 @@ export type AuthContextProps = {
     refreshToken,
   }: {
     accessToken: string;
-    refreshToken: string | null;
-  }) => void;
+    refreshToken: string;
+  }) => Promise<void>;
 };
 
 export const AuthContext = createContext<AuthContextProps>({} as AuthContextProps);
