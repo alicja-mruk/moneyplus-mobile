@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { sha256 } from 'react-native-sha256';
 
 import { Endpoints } from 'api/endpoints';
 import { LoginData, LoginVars } from 'api/types';
@@ -14,11 +15,16 @@ export const useLogin = () => {
 
   const navigation = useNavigation();
 
-  const login = async (args: LoginVars) => {
+  const login = async ({ email, password }: LoginVars) => {
     try {
+      const encryptedPassword = await sha256(password);
+
       const {
         data: { accessToken, refreshToken },
-      } = await authAxios.post<LoginVars, LoginData>(Endpoints.Login, args);
+      } = await authAxios.post<LoginVars, LoginData>(Endpoints.Login, {
+        email,
+        password: encryptedPassword,
+      });
       await saveTokensToKeychain({ accessToken, refreshToken });
 
       navigation.reset({
