@@ -1,4 +1,7 @@
 {
+  "noData": {
+    "title": "No data to display"
+  },
   "form": {
     "required": "Field is required",
     "emailIncorrectFormat": "Email has incorrect format",

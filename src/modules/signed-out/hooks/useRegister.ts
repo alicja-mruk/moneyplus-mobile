@@ -17,7 +17,7 @@ export const useRegister = () => {
   const register = async (args: RegisterVars) => {
     try {
       const encryptedPassword = await sha256(args.password);
-      // destructure needed props
+      // destructure needed propscd ..
       // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
       const { password, ...restArgs } = args;
 
