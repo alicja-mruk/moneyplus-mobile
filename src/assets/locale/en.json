@@ -1,4 +1,7 @@
 {
+  "noData": {
+    "title": "No data to display"
+  },
   "form": {
     "required": "Field is required",
     "emailIncorrectFormat": "Email has incorrect format",
@@ -77,6 +80,15 @@
         "email": "Email",
         "firstName": "First Name",
         "lastName": "Last Name"
+      }
+    },
+    "expenses": {
+      "range": {
+        "day": "Dayly",
+        "week": "Weekly",
+        "month": "Monthly",
+        "year": "Yearly",
+        "all": "Show all history"
       }
     }
   },

@@ -3,6 +3,7 @@ import React, { useMemo } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, SectionList, Text, VStack } from 'native-base';
 
+import NoData from 'components/NoData';
 import { useTranslationPrefix } from 'config/i18n';
 import { useGetExpenses } from 'hooks/api/expenses/useGetExpenses';
 import { Expense } from 'models/Expense';
@@ -41,7 +42,6 @@ export const Transactions = () => {
       <Text variant="h1" px="4">
         {t('title')}
       </Text>
-
       {data && data.length > 1 ? (
         <SectionList
           contentContainerStyle={{ paddingVertical: 16 }}
@@ -54,8 +54,7 @@ export const Transactions = () => {
           renderSectionHeader={renderSectionHeader}
         />
       ) : (
-        // TODO: finish
-        <Text>No Data</Text>
+        <NoData />
       )}
     </VStack>
   );

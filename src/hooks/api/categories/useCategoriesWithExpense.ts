@@ -34,7 +34,8 @@ export const useCategoriesWithExpense = () => {
       return {
         ...category,
         totalExpense: Number(totalExpense.toFixed(2)),
-        totalExpensePercentage: parseFloat(((totalExpense / totalExpenses) * 100).toFixed(2)),
+        totalExpensePercentage:
+          totalExpenses === 0 ? 0 : parseFloat(((totalExpense / totalExpenses) * 100).toFixed(2)),
       };
     });
   }, [categories, expenses, totalExpenses]);

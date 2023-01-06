@@ -33,10 +33,13 @@ export const useOverviewUseCase = () => {
     [colors.black, data],
   );
 
+  const isEmpty = useMemo(() => data.every(item => item.totalExpense === 0), [data]);
+
   return {
     data,
     chartData,
     showAll,
     setShowAll,
+    isEmpty,
   };
 };
