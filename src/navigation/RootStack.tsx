@@ -6,7 +6,7 @@ import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/
 import { useTheme } from 'native-base';
 
 import { SignedInTabs, SignedInTabsParamList } from 'modules/signed-in/SignedInTabs';
-import { Splash } from 'modules/signed-out/modules/Splash';
+import { Splash } from 'modules/signed-out/modules/Splash/Splash';
 import { SignedOutStack, SignedOutStackParamList } from 'modules/signed-out/SignedOutStack';
 
 import { Route } from './Route';

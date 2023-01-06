@@ -1,8 +1,8 @@
 import React from 'react';
 
-
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
+import * as Keychain from 'react-native-keychain';
 
 import { Endpoints } from 'api/endpoints';
 import { LoginData, RefreshTokenVars } from 'api/types';
@@ -28,8 +28,9 @@ export const AxiosProvider = ({ children }: Props) => {
 
   publicAxios.interceptors.request.use(
     config => {
+      if (!config.headers) config.headers = {};
       if (!config?.headers?.Authorization) {
-        config.headers.Authorization = `Bearer ${authContext.authState?.accessToken}`;
+        config.headers.Authorization = `Bearer ${authContext.authState.accessToken}`;
       }
 
       return config;
@@ -40,34 +41,39 @@ export const AxiosProvider = ({ children }: Props) => {
   );
 
   const refreshAuthLogic = async (failedRequest: any) => {
+    const jwt = await Keychain.getGenericPassword();
+    const oldRefreshToken = jwt.password;
+
+    if (oldRefreshToken === null) {
+      await authContext.logout();
+    }
+
     const requestData = {
-      refreshToken: authContext.authState.refreshToken,
+      refreshToken: oldRefreshToken,
     };
 
     try {
-      const { data } = await axios.post<RefreshTokenVars, LoginData>(
+      const {
+        data: { accessToken, refreshToken },
+      } = await axios.post<RefreshTokenVars, LoginData>(
         `${Constants.BASE_URL}/${Endpoints.RefreshToken}`,
         requestData,
       );
 
-      failedRequest.response.config.headers.Authorization = 'Bearer ' + data.accessToken;
-
-      authContext.setAuthState({
-        ...authContext.authState,
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
+      await authContext.saveTokensToKeychain({
+        accessToken,
+        refreshToken,
       });
 
-      authContext.saveTokensToKeychain({
-        accessToken: data.accessToken,
-        refreshToken: data.refreshToken,
-      });
-    } catch {
-      authContext.setAuthState({
-        accessToken: '',
-        refreshToken: '',
-        authenticated: false,
-      });
+      failedRequest.response.config.headers.Authorization = 'Bearer ' + accessToken;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 400) {
+          await authContext.logout();
+          console.error('Refresh token expired or invalid');
+        }
+      }
+      console.error('RefreshAuthLogic error');
     }
   };
 

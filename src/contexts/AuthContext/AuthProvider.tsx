@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import * as Keychain from 'react-native-keychain';
 
-
+import { CustomToast } from 'components/CustomToast';
 import { Route } from 'navigation/Route';
 
 import { AuthContext } from './AuthContext';
@@ -19,8 +19,8 @@ export type AuthState = {
 };
 
 export const initAuthState = {
-  accessToken: null,
-  refreshToken: null,
+  accessToken: 'DUPA',
+  refreshToken: 'DUPA',
   authenticated: null,
 };
 
@@ -42,12 +42,14 @@ export const AuthProvider = ({ children }: Props) => {
     refreshToken,
   }: {
     accessToken: string;
-    refreshToken: string | null;
+    refreshToken: string;
   }) => {
     try {
-      await Keychain.setGenericPassword(accessToken, refreshToken ?? '');
+      await Keychain.setGenericPassword(accessToken, refreshToken);
+      setAuthState({ accessToken, refreshToken, authenticated: true });
     } catch (e) {
-      console.error(e);
+      CustomToast.error('Failed to save tokens');
+      await logout();
     }
   };
 
