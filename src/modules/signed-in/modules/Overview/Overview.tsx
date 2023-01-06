@@ -29,9 +29,9 @@ export const Overview = () => {
           width={width}
           height={200}
           chartConfig={chartConfig}
-          accessor={'totalExpensePercentage'}
+          accessor="totalExpensePercentage"
           backgroundColor="transparent"
-          paddingLeft={'-10'}
+          paddingLeft="-10"
           absolute
         />
         <Box mt="6">
