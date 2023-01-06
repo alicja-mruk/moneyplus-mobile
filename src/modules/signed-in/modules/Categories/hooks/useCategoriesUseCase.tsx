@@ -30,7 +30,8 @@ export const useCategoriesUseCase = () => {
   }, [categoriesWithExpense]);
 
   const expenseValue = useMemo(() => {
-    const trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
+    let trimmedZeros = totalExpenses.toString().replace(/^0+/, '');
+    if (trimmedZeros.length < 1) trimmedZeros = '0';
     return `${trimmedZeros} ${Constants.CURRENCY}`;
   }, [totalExpenses]);
 
