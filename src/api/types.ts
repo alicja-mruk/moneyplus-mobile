@@ -1,4 +1,4 @@
-import { Expense } from 'models';
+import { Expense } from 'models/Expense';
 
 export type RegisterVars = {
   email: string;
@@ -31,26 +31,19 @@ export type RefreshTokenVars = {
   refreshToken: string;
 };
 
-export type GetUserData = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  age: number;
-  email: string;
-};
-
 export type EditExpenseVars = {
   id: string;
   categoryId: string;
-  expenseName: string;
-  expenseValue: string;
+  name: string;
+  value: number;
+  creationDate?: string;
 };
 
 export type AddExpenseVars = {
-  id: string;
   categoryId: string;
-  expenseName: string;
-  expenseValue: string;
+  name: string;
+  value: number;
+  creationDate?: string;
 };
 
 export type DeleteExpenseVars = {

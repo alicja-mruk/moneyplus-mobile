@@ -1,4 +1,3 @@
-import 'config/i18n';
 import React, { useCallback } from 'react';
 
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
@@ -8,25 +7,23 @@ import * as SplashScreen from 'expo-splash-screen';
 import { NativeBaseProvider, View } from 'native-base';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { queryClient } from 'api';
+import { queryClient } from 'api/queryClient';
 import { CustomToastProvider } from 'components/CustomToast';
-import { theme } from 'config/theme';
-import { AuthProvider, AxiosProvider } from 'contexts';
-import { useLoadFonts } from 'hooks';
+import Loading from 'components/Loading';
+import { theme } from 'config/theme/theme';
+import { AuthProvider } from 'contexts/AuthContext';
+import { AxiosProvider } from 'contexts/AxiosContext';
+import { useInit } from 'hooks/useInit';
 import { RootStack } from 'navigation/RootStack';
 
 export const App = () => {
-  const ready = useLoadFonts();
+  const { isReady } = useInit();
 
   const onLayoutRootView = useCallback(async () => {
-    if (ready) {
+    if (isReady) {
       await SplashScreen.hideAsync();
     }
-  }, [ready]);
-
-  if (!ready) {
-    return null;
-  }
+  }, [isReady]);
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -36,9 +33,7 @@ export const App = () => {
             <NavigationContainer>
               <View flex="1" onLayout={onLayoutRootView}>
                 <AuthProvider>
-                  <AxiosProvider>
-                    <RootStack />
-                  </AxiosProvider>
+                  <AxiosProvider>{isReady ? <RootStack /> : <Loading />}</AxiosProvider>
                 </AuthProvider>
               </View>
             </NavigationContainer>

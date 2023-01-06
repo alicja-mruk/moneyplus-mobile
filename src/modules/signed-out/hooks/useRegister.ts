@@ -1,38 +1,39 @@
 import { useNavigation } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
+import axios from 'axios';
+import { sha256 } from 'react-native-sha256';
 
-import { RegisterVars } from 'api';
-import { CustomToast } from 'components';
-import { useAuthContext } from 'contexts';
-import { RegisterErrorReason } from 'contexts/AuthContext';
-import { Route } from 'navigation';
+import { Endpoints } from 'api/endpoints';
+import { RegisterData, RegisterVars } from 'api/types';
+import { CustomToast } from 'components/CustomToast';
+import { useTranslationPrefix } from 'config/i18n';
+import { useAxiosContext } from 'contexts/AxiosContext';
+import { Route } from 'navigation/Route';
 
 export const useRegister = () => {
-  const { register: registerRequest } = useAuthContext();
-  const { t } = useTranslation();
+  const t = useTranslationPrefix('signedOut.register');
   const { navigate } = useNavigation();
+  const { authAxios } = useAxiosContext();
 
   const register = async (args: RegisterVars) => {
     try {
-      const result = await registerRequest(args);
-      if (result.status === 'success') {
-        CustomToast.success(t('signedOut.register.userCreated'));
-        navigate(Route.Login);
-        return;
-      }
-      if (result.status === 'error') {
-        switch (result.reason) {
-          case RegisterErrorReason.USER_EXISTS: {
-            CustomToast.success(t('signedOut.register.error.userExist'));
-            break;
-          }
-          default: {
-            CustomToast.error();
-            break;
-          }
+      const encryptedPassword = await sha256(args.password);
+      // destructure needed propscd ..
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+      const { password, ...restArgs } = args;
+
+      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, {
+        password: encryptedPassword,
+        ...restArgs,
+      });
+      CustomToast.success(t('userCreated'));
+      navigate(Route.Login);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.status === 409) {
+          CustomToast.error(t('error.userExist'));
+          return;
         }
       }
-    } catch (e) {
       CustomToast.error();
     }
   };

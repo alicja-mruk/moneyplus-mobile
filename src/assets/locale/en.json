@@ -1,4 +1,7 @@
 {
+  "noData": {
+    "title": "No data to display"
+  },
   "form": {
     "required": "Field is required",
     "emailIncorrectFormat": "Email has incorrect format",
@@ -7,7 +10,8 @@
   "global": {
     "cancel": "Cancel",
     "error": "Something went wrong",
-    "success": "Success"
+    "success": "Success",
+    "init": "Please wait..."
   },
   "signedOut": {
     "email": "Email",
@@ -33,7 +37,6 @@
       }
     }
   },
-
   "signedIn": {
     "tabs": {
       "categories": "Categories",
@@ -59,17 +62,46 @@
           "today": "Today",
           "yesterday": "Yesterday"
         }
-      }
+      },
+      "addExpenseSuccess": "Successfully added expense to category {{ name }}"
     },
     "transactions": {
       "title": "Transactions"
     },
     "overview": {
-      "title": "Overview"
+      "title": "Overview",
+      "showMore": "Show more"
     },
     "settings": {
       "title": "Settings",
-      "logout": "Logout"
+      "logout": "Logout",
+      "user": {
+        "age": "Age",
+        "email": "Email",
+        "firstName": "First Name",
+        "lastName": "Last Name"
+      }
+    },
+    "expenses": {
+      "range": {
+        "day": "Dayly",
+        "week": "Weekly",
+        "month": "Monthly",
+        "year": "Yearly",
+        "all": "Show all history"
+      }
     }
+  },
+  "updateExpense": {
+    "form": {
+      "note": "Note",
+      "expense": "Expense",
+      "date": "Date"
+    },
+    "createExpenseSuccess": "Created an expense",
+    "editExpenseSuccess": "Expense has been edited",
+    "deleteExpenseSuccess": "Expense has been removed",
+    "update": " Update Expense",
+    "create": "Create Expense"
   }
 }

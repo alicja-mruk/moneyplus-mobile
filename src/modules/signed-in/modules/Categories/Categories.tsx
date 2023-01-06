@@ -1,45 +1,24 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useWindowDimensions } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
 import { Center, Text, VStack } from 'native-base';
 import { DonutChart } from 'react-native-circular-chart';
 
-import { ContentWrapper } from 'components';
-import { Constants } from 'config/constants';
-import { colorPalette } from 'config/theme/foundations';
-import { useBottomSheetCustom } from 'hooks';
-import { useCategoriesWithExpense } from 'hooks/api';
-import { Category } from 'models/Category';
+import { ContentWrapper } from 'components/ContentWrapper';
+import { Route } from 'navigation/Route';
 
-import { AddRecordBottomSheet, CategoryItem } from './components';
+import { CategoryItem } from './components/CategoryItem';
+import { useCategoriesUseCase } from './hooks/useCategoriesUseCase';
+import { getAbsoluteProps } from './utils';
 
-// if every value is 0 it causes crash
-const noExpensesChartData = [
-  { value: 250, color: colorPalette.gray[200], name: '' },
-  { value: 250, color: colorPalette.gray[200], name: '' },
-];
+const CONTAINER_HEIGHT = 130;
 
 export const Categories = () => {
   const { height, width } = useWindowDimensions();
-  const bottomSheet = useBottomSheetCustom<Category>();
+  const { navigate } = useNavigation();
 
-  const { categoriesWithExpense, totalExpenses } = useCategoriesWithExpense();
-
-  const chartData = useMemo(() => {
-    if (categoriesWithExpense.some(category => category.totalExpense > 0)) {
-      return categoriesWithExpense.map(category => {
-        return { value: category.totalExpense, color: category.color, name: category.categoryName };
-      });
-    }
-    return noExpensesChartData;
-  }, [categoriesWithExpense]);
-
-  // TODO: remove mocks
-  const income = '14 000 zł';
-
-  const onAddExpense = (category: Category) => {
-    bottomSheet.open(category);
-  };
+  const { chartData, expenseValue, categoriesWithExpense } = useCategoriesUseCase();
 
   return (
     <ContentWrapper>
@@ -49,7 +28,7 @@ export const Categories = () => {
           strokeWidth={10}
           radius={105}
           containerWidth={width}
-          containerHeight={130 * 2}
+          containerHeight={CONTAINER_HEIGHT * 2}
           type="round"
           startAngle={0}
           endAngle={360}
@@ -58,10 +37,7 @@ export const Categories = () => {
             <VStack alignItems="center" justifyContent="center">
               <Text variant="label">Expenses</Text>
               <Text color="red.500" variant="h2">
-                {`${totalExpenses} ${Constants.CURRENCY}`}
-              </Text>
-              <Text color="green.500" variant="body">
-                {income}
+                {expenseValue}
               </Text>
             </VStack>
           }
@@ -70,46 +46,12 @@ export const Categories = () => {
           <CategoryItem
             key={index}
             {...item}
-            onPress={() => onAddExpense(item)}
+            onPress={() => navigate(Route.UpdateExpense, { category: item })}
             position="absolute"
             {...getAbsoluteProps(index, width, height)}
           />
         ))}
       </Center>
-
-      <AddRecordBottomSheet category={bottomSheet.data} ref={bottomSheet.ref} />
     </ContentWrapper>
   );
-};
-
-const getAbsoluteProps = (index: number, width: number, height: number) => {
-  const itemsInRow = 4;
-  const heightSpace = height / itemsInRow - 24;
-  const widthSpace = width / itemsInRow;
-
-  if (index < itemsInRow) {
-    return {
-      top: 0,
-      left: index * widthSpace,
-    };
-  }
-
-  if (index >= itemsInRow && index < 2 * itemsInRow) {
-    return {
-      top: index < itemsInRow + itemsInRow / 2 ? heightSpace : 2 * heightSpace,
-      left: index % 2 === 0 ? 0 : 3 * widthSpace,
-    };
-  }
-
-  return {
-    top: 3 * heightSpace,
-    left:
-      index % 3 === 0
-        ? widthSpace
-        : index === 2 * itemsInRow
-        ? 0
-        : index % 2 === 0
-        ? 2 * widthSpace
-        : 3 * widthSpace,
-  };
 };

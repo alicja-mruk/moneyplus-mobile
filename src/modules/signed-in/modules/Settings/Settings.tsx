@@ -1,24 +1,27 @@
 import React from 'react';
 
-
 import { Button, Text } from 'native-base';
-import { useTranslation } from 'react-i18next';
 
-import { ContentWrapper } from 'components';
-import { useAuthContext } from 'contexts';
+import { ContentWrapper } from 'components/ContentWrapper';
+import { useTranslationPrefix } from 'config/i18n';
+
+import { UserInfoList } from './components/UserInfoList';
+import { useSettingsUseCase } from './hooks/useSettingsUseCase';
 
 export const Settings = () => {
-  const { t } = useTranslation();
-  const { logout } = useAuthContext();
+  const t = useTranslationPrefix('signedIn.settings');
+
+  const { userInfoData, data, isLoading, logout } = useSettingsUseCase();
 
   const onLogoutPress = async () => {
     await logout();
   };
 
   return (
-    <ContentWrapper justifyContent="space-between">
-      <Text variant="h1">{t('signedIn.settings.title')}</Text>
-      <Button onPress={onLogoutPress}>{t('signedIn.settings.logout')}</Button>
+    <ContentWrapper>
+      <Text variant="h1">{t('title')}</Text>
+      <UserInfoList isLoading={isLoading} data={data} userInfoData={userInfoData} />
+      <Button onPress={onLogoutPress}>{t('logout')}</Button>
     </ContentWrapper>
   );
 };

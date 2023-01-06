@@ -1,10 +1,9 @@
 import React, { useMemo } from 'react';
 
-import { Box, CheckIcon, HStack, Text, VStack, WarningIcon } from 'native-base';
+
+import { Box, CheckIcon, HStack, Text, useTheme, VStack, WarningIcon } from 'native-base';
 import { useTranslation } from 'react-i18next';
 import Toast, { BaseToastProps } from 'react-native-toast-message';
-
-import { colorPalette } from 'config/theme/foundations';
 
 type Props = {
   title: string;
@@ -29,17 +28,21 @@ export const CustomToast = {
 };
 
 const ErrorIcon = () => {
+  const { colors } = useTheme();
+
   return (
     <Box bg="warning.200" rounded="full" p="1">
-      <WarningIcon color={colorPalette.white} />
+      <WarningIcon color={colors.white} />
     </Box>
   );
 };
 
 const SuccessIcon = () => {
+  const { colors } = useTheme();
+
   return (
     <Box bg="green.500" rounded="full" p="1">
-      <CheckIcon color={colorPalette.white} />
+      <CheckIcon color={colors.white} />
     </Box>
   );
 };

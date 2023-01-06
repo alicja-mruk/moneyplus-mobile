@@ -1,9 +1,14 @@
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { RouteProp } from '@react-navigation/native';
 import { CardStyleInterpolators, createStackNavigator } from '@react-navigation/stack';
 
-import { Route } from 'navigation';
+import { Category } from 'models/Category';
+import { Expense } from 'models/Expense';
+import { Route } from 'navigation/Route';
+
+import { UpdateExpense } from '../UpdateExpense/UpdateExpense';
 
 import { Categories } from './Categories';
 
@@ -24,10 +29,18 @@ export const CategoriesStack = () => {
         cardStyleInterpolator,
       }}>
       <Stack.Screen name={Route.Categories} component={Categories} />
+      <Stack.Screen
+        name={Route.UpdateExpense}
+        component={UpdateExpense}
+        options={{ presentation: 'modal' }}
+      />
     </Stack.Navigator>
   );
 };
 
 export type CategoriesStackParamList = {
   Categories: undefined;
+  UpdateExpense: { category: Category; expense?: Expense };
 };
+
+export type UpdateExpenseParamProp = RouteProp<CategoriesStackParamList, Route.UpdateExpense>;

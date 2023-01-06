@@ -5,12 +5,12 @@ import i18next from 'i18next';
 import { Button, HStack, Image, Text, VStack } from 'native-base';
 import { useTranslation } from 'react-i18next';
 
-import { LoginVars } from 'api';
-import { ContentWrapper, CustomForm } from 'components';
-import { FormConfig, RenderFooterType } from 'components/CustomForm';
-import { Route } from 'navigation';
+import { LoginVars } from 'api/types';
+import { ContentWrapper } from 'components/ContentWrapper';
+import { CustomForm, FormConfig, RenderFooterType } from 'components/CustomForm';
+import { Route } from 'navigation/Route';
 
-import { useLogin } from '../hooks';
+import { useLogin } from '../hooks/useLogin';
 
 export const loginFormConfig: FormConfig[] = [
   {
@@ -35,7 +35,7 @@ export const loginFormConfig: FormConfig[] = [
 
 export const Login = () => {
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
+  const navigation = useNavigation();
   const { login } = useLogin();
 
   const onLoginPress = async (args: LoginVars) => {
@@ -64,12 +64,12 @@ export const Login = () => {
       </VStack>
 
       <HStack justifyContent="center">
-        <Text variant="subtitle">{t('signedOut.login.newUser')} </Text>
+        <Text variant="subtitle">{t('signedOut.login.newUser')}</Text>
         <Text
           variant="subtitle"
           color="secondary.400"
           fontWeight="600"
-          onPress={() => navigate(Route.Register)}>
+          onPress={() => navigation.navigate(Route.Register)}>
           {t('signedOut.login.register')}
         </Text>
       </HStack>
