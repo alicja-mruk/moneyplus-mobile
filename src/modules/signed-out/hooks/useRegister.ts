@@ -1,5 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
+import { sha256 } from 'react-native-sha256';
 
 import { Endpoints } from 'api/endpoints';
 import { RegisterData, RegisterVars } from 'api/types';
@@ -15,7 +16,15 @@ export const useRegister = () => {
 
   const register = async (args: RegisterVars) => {
     try {
-      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, args);
+      const encryptedPassword = await sha256(args.password);
+      // destructure needed props
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+      const { password, ...restArgs } = args;
+
+      await authAxios.post<RegisterVars, RegisterData>(Endpoints.Register, {
+        password: encryptedPassword,
+        ...restArgs,
+      });
       CustomToast.success(t('userCreated'));
       navigate(Route.Login);
     } catch (error) {
