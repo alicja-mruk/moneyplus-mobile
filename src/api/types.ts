@@ -1,4 +1,4 @@
-import { Expense } from 'models';
+import { Expense } from 'models/Expense';
 
 export type RegisterVars = {
   email: string;
