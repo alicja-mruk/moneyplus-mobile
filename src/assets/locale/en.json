@@ -81,6 +81,15 @@
         "firstName": "First Name",
         "lastName": "Last Name"
       }
+    },
+    "expenses": {
+      "range": {
+        "day": "Dayly",
+        "week": "Weekly",
+        "month": "Monthly",
+        "year": "Yearly",
+        "all": "Show all history"
+      }
     }
   },
   "updateExpense": {
