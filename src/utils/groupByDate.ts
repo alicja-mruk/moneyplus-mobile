@@ -1,8 +1,11 @@
+import { ExpenseRange } from 'hooks/useSelectExpenseRange';
 import { Expense } from 'models/Expense';
 
-export const groupByDate = (expenses: Expense[]) => {
+export const groupByDate = (expenses: Expense[], expenseRange: ExpenseRange = ExpenseRange.ALL) => {
   const groups = expenses.reduce<Record<string, Expense[]>>((result, expense) => {
-    const date = expense.creationDate.split('T')[0];
+    const _date = expense.creationDate.split('T')[0];
+    const date = getSubstringDate(_date, expenseRange);
+
     if (!result[date]) {
       result[date] = [];
     }
@@ -18,4 +21,15 @@ export const groupByDate = (expenses: Expense[]) => {
   });
 
   return result.sort((a, b) => b.date.localeCompare(a.date));
+};
+
+const getSubstringDate = (date: string, expenseRange: ExpenseRange) => {
+  switch (expenseRange) {
+    case ExpenseRange.YEAR:
+      return date.substring(0, 4);
+    case ExpenseRange.MONTH:
+      return date.substring(0, 7);
+    default:
+      return date;
+  }
 };
