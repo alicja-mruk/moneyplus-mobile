@@ -1,23 +1,34 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import { useNavigation } from '@react-navigation/native';
-import { Pressable, SectionList, Text, VStack } from 'native-base';
+import {
+  Box,
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  HStack,
+  Pressable,
+  SectionList,
+  Select,
+  Text,
+  VStack,
+} from 'native-base';
 
 import NoData from 'components/NoData';
 import { useTranslationPrefix } from 'config/i18n';
-import { useGetExpenses } from 'hooks/api/expenses/useGetExpenses';
+import { ExpenseRange } from 'hooks/useSelectExpenseRange';
 import { Expense } from 'models/Expense';
 import { Route } from 'navigation/Route';
-import { groupByDate } from 'utils/groupByDate';
 
 import { SectionHeader } from './components/SectionHeader';
 import { TransactionListItem } from './components/TransactionListItem';
+import { useTransactionsUseCase } from './useTransactionsUseCase';
 
 export const Transactions = () => {
   const t = useTranslationPrefix('signedIn.transactions');
-  const { data } = useGetExpenses();
+  const { data, sectionData, range, onRangeChange, rangeLabels } = useTransactionsUseCase();
+
   const { navigate } = useNavigation();
-  const sectionData = useMemo(() => groupByDate(data ?? []), [data]);
 
   const renderItem = ({ item }: { item: Expense }) => (
     <Pressable
@@ -30,18 +41,39 @@ export const Transactions = () => {
     const sectionExpenses = sectionData.find(item => item.date === date)?.data;
     const totalSectionExpense =
       sectionExpenses?.reduce((acc, expense) => acc + expense.value, 0) ?? 0;
-    const dateFormatted = new Date(date);
+    const _date = new Date(date);
 
     return (
-      <SectionHeader dateFormatted={dateFormatted} totalSectionExpense={totalSectionExpense} />
+      <SectionHeader date={_date} totalSectionExpense={totalSectionExpense} range={range.value} />
     );
   };
 
   return (
     <VStack py="4" flex="1" safeArea bg="white">
-      <Text variant="h1" px="4">
-        {t('title')}
-      </Text>
+      <HStack justifyContent="space-between" alignItems="center" mr="2">
+        <Text variant="h1" px="4">
+          {t('title')}
+        </Text>
+        <Box maxW="200">
+          <Select
+            color="gray.500"
+            rounded="8"
+            dropdownOpenIcon={<ChevronUpIcon pr="12" />}
+            dropdownCloseIcon={<ChevronDownIcon pr="12" />}
+            selectedValue={range.value}
+            minWidth="180"
+            accessibilityLabel={t('a11y.select')}
+            placeholder={t('chooseTimeframe')}
+            _selectedItem={{
+              startIcon: <CheckIcon size="5" />,
+            }}
+            onValueChange={value => onRangeChange(value as ExpenseRange)}>
+            {rangeLabels.map((item, index) => (
+              <Select.Item {...item} key={index} color="gray.400" />
+            ))}
+          </Select>
+        </Box>
+      </HStack>
       {data && data.length > 1 ? (
         <SectionList
           contentContainerStyle={{ paddingVertical: 16 }}
