@@ -19,8 +19,8 @@ export type AuthState = {
 };
 
 export const initAuthState = {
-  accessToken: 'DUPA',
-  refreshToken: 'DUPA',
+  accessToken: '',
+  refreshToken: '',
   authenticated: null,
 };
 
